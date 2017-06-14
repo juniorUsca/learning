@@ -1,0 +1,11 @@
+version: "2"
+services:
+  es:
+    image: elasticsearch:2.3
+  web:
+    image: juscah/foodtrucksweb
+    command: python app.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
