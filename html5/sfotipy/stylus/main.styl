@@ -1,10 +1,20 @@
 @import "normalize.styl"
+@import "nib"
 @import "fonts.styl"
 
 gris_oscuro = #333
 gris_claro  = #818181
 fucsia      = #bd2558
 gris_ligero = #f0f0f0
+
+// mixins
+animacion(val) // use with: animacion(1s state infinite)
+  -webkit-animation val
+  -moz-animation val
+  -o-animation val
+  -ms-animation val
+  animation val
+
 
 body
   font-size 16px // el minimo tamaño recomendado
@@ -135,6 +145,8 @@ li
       width 30%
       border-radius 5px
       position relative
+      // animaciones
+      animation 20s state infinite linear // linear es para la aceleracion lineal
       .circle
         width 10px
         height 10px
@@ -143,6 +155,8 @@ li
         position absolute
         right 0
         top -2px
+        // animaciones
+        animation 20s circle infinite
 //.description
 //  margin-bottom 1em
 
@@ -274,4 +288,19 @@ li
   
   .playlist
     display block
-      
+
+
+// animaciones
+@keyframes state
+  0% // tambien se puede usar from
+    width 0%
+  100% // tambien se puede usar to
+    width 100%
+@keyframes circle
+  0% // tambien se puede usar from
+    transform scale(1)
+  99%
+    opacity 1
+  100% // tambien se puede usar to
+    transform scale(2)
+    opacity 0

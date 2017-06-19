@@ -1,12 +1,14 @@
 
 ## Developing
 ```
-stylus -c -w stylus/main.styl -o css
+docker build -t juscah/stylus .
+docker run -ti --rm -v $(pwd):/app juscah/stylus sh
+stylus -u nib -c -w stylus/main.styl -o css
 ```
 
 ## Production
 ```
-stylus -c stylus/main.styl -o css
+stylus -u nib -c stylus/main.styl -o css
 ```
 
 
