@@ -29,6 +29,13 @@ a
   padding 1em
 .right-text
   text-align right
+.left
+  float left
+.right
+  float right
+.round
+  border-radius 50%
+  overflow hidden
 
 // Menu
 .menu
@@ -50,7 +57,7 @@ a
   margin-top -10px
   color gris_oscuro
 
-// songs
+// Songs
 .container
   margin 1.4rem // debe ser rem y no em por causa de su propio font-size
   font-size 0 // para quitar el espacio del inlineblock hijo
@@ -133,3 +140,58 @@ a
 
 .play
   padding-top 1em
+
+
+// Media Queries
+@media screen and (min-width: 480px)
+  .song
+    &:nth-child(even)
+      margin-right 1em
+  .playing
+    &.medium
+      width auto
+  .image
+    img
+      width 100%
+      height auto
+
+@media screen and (min-width: 1000px)
+  .button-menu
+    display none
+  .header
+    height auto
+    .title
+      display none
+  .isotipo
+    //width 122px
+    width 60px
+  .logo
+    padding 1.3em 0
+    overflow hidden // esta propiedad se usa cuando los hijos usan float, para q el modelo de cajas no se rompa
+    .wrap
+      width 1000px
+
+  .user
+    .avatar
+      background red
+      width 38px
+      height 38px
+    .username
+      color gris_claro
+      position relative
+      top 9px
+      margin-left .5em
+      // seudoelemento
+      &:after
+        content ""
+        border-top 9px solid gris_claro
+        border-left 7px solid transparent
+        border-right 7px solid transparent
+        display inline-block // necesita el display si o si
+        margin-left .5em
+  .search
+    input
+      border 1px solid gris_claro
+      height 2.5em
+      border-radius 5px
+      padding 0 1em 0 2em
