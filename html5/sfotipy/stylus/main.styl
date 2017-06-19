@@ -1,0 +1,135 @@
+@import "normalize.styl"
+@import "fonts.styl"
+
+gris_oscuro = #333
+gris_claro  = #818181
+fucsia      = #bd2558
+
+body
+  font-size 16px // el minimo tamaño recomendado
+  font-family 'Varela Round', sans-serif // sacado de google.com/fonts
+
+figure
+  margin 0
+img
+  vertical-align top // arregla el espacio extra inferior q ocupa la imagen
+a
+  text-decoration none
+
+// oocss classes
+.relative
+  position relative
+.border-bottom
+  border-bottom 1px solid gris_claro
+.center-block
+  margin 0 auto // solo funciona si tiene un ancho determinado
+.center-text
+  text-align center
+.padding
+  padding 1em
+.right-text
+  text-align right
+
+// Menu
+.menu
+  display none
+
+.header // este es el padre relativo
+  height 3.5em
+  
+  .title
+    font-size 1.1em
+    text-align center
+    margin 0
+    line-height 3.5rem
+
+.button-menu
+  position absolute // posicion respecto al padre con posicion relativa
+  top 50% // funciona solo con position
+  left 1.5em // funciona solo con position
+  margin-top -10px
+  color gris_oscuro
+
+// songs
+.container
+  margin 1.4rem // debe ser rem y no em por causa de su propio font-size
+  font-size 0 // para quitar el espacio del inlineblock hijo
+  text-align center
+
+.song
+  width 8rem // 128px
+  margin-right 1em
+  margin-bottom 1em
+  text-align left
+  display inline-block // tiene propiedades de texto
+  font-size 1rem // para recuperar el tamaño del texto
+  &:nth-child(even)
+    margin-right 0
+  p
+    margin .5em 0
+
+.name
+  color gris_oscuro
+
+.author
+  color gris_claro
+
+
+// Playing
+.playing
+  &.small
+    width 20rem // 320px
+
+.actions
+  position absolute
+  bottom 0 // solo funciona con un position
+  left 0 // solo funciona con un position
+  right 0 // solo funciona con un position
+  background rgba(#000,.3)
+
+// icon buttons
+.action
+  color white
+  font-size 1.2em
+  margin-right .8rem
+  &:last-child
+    margin-right 0
+  &.gray
+    color gris_claro
+.progress
+  margin 1em 0
+  position relative
+  .min
+  .max
+    font-size .8rem
+    top -5px
+    position absolute
+  .min
+    left 0
+  .max
+    right 0
+  .total
+    height 5px
+    width 75%
+    margin 0 auto
+    background gris_claro
+    border-radius 5px
+    .state
+      height 5px
+      background fucsia
+      width 30%
+      border-radius 5px
+      position relative
+      .circle
+        width 10px
+        height 10px
+        background gris_oscuro
+        border-radius 50%
+        position absolute
+        right 0
+        top -2px
+//.description
+//  margin-bottom 1em
+
+.play
+  padding-top 1em
