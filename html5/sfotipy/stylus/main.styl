@@ -4,6 +4,7 @@
 gris_oscuro = #333
 gris_claro  = #818181
 fucsia      = #bd2558
+gris_ligero = #f0f0f0
 
 body
   font-size 16px // el minimo tamaño recomendado
@@ -15,6 +16,11 @@ img
   vertical-align top // arregla el espacio extra inferior q ocupa la imagen
 a
   text-decoration none
+ul
+  margin 0
+  padding 0
+li
+  list-style none
 
 // oocss classes
 .relative
@@ -36,6 +42,8 @@ a
 .round
   border-radius 50%
   overflow hidden
+.wrap
+  width 1000px
 
 // Menu
 .menu
@@ -156,22 +164,27 @@ a
       height auto
 
 @media screen and (min-width: 1000px)
+  body
+    background gris_ligero
+
   .button-menu
     display none
   .header
     height auto
     .title
       display none
+  
+  .logo
+    background  white
+    padding 1.3em 0
+    overflow hidden // esta propiedad se usa cuando los hijos usan float, para q el modelo de cajas no se rompa
+    
   .isotipo
     //width 122px
     width 60px
-  .logo
-    padding 1.3em 0
-    overflow hidden // esta propiedad se usa cuando los hijos usan float, para q el modelo de cajas no se rompa
-    .wrap
-      width 1000px
 
   .user
+    margin-left 2em
     .avatar
       background red
       width 38px
@@ -183,15 +196,42 @@ a
       margin-left .5em
       // seudoelemento
       &:after
-        content ""
+        content "" // es necesario para que el pseudoelemento se muestre en la pantalla
         border-top 9px solid gris_claro
         border-left 7px solid transparent
         border-right 7px solid transparent
         display inline-block // necesita el display si o si
         margin-left .5em
+
   .search
     input
       border 1px solid gris_claro
       height 2.5em
       border-radius 5px
       padding 0 1em 0 2em
+    .search-icon
+      position absolute
+      top .7em
+      left .5em
+      color gris_claro
+    .close-icon
+      position absolute
+      top .45em
+      right .5em
+      color gris_claro
+      font-size 1.2em
+  
+  .menu
+    display block
+    overflow hidden // esta propiedad se usa cuando los hijos usan float, para q el modelo de cajas no se rompa
+    .item
+      float left
+      a
+        color gris_oscuro
+        text-transform uppercase
+        cursor pointer
+        padding 1em
+        display block // para que se aplique el padding
+        border-top 5px solid transparent
+        &:hover
+          border-top 5px solid gris_claro

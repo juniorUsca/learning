@@ -15,5 +15,4 @@ stylus -c stylus/main.styl -o css
 The normalize file is from: https://raw.githubusercontent.com/bymathias/normalize.styl/master/normalize.styl
 
 The icons are from: https://icomoon.io/app/#/select
-
 with ```Generate Font```
