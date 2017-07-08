@@ -1,0 +1,25 @@
+Sfotipy.Views.Album = Backbone.View.extend({
+    tagName: 'article',
+    className: 'song',
+    events: {
+        'click': 'navigate'
+    },
+    template: Handlebars.compile( $("#album-template").html() ),
+    initialize: function () {
+        // enlaza VISTA con MODELO
+        this.listenTo (this.model, "change", this.render, this)
+    },
+    render: function() {
+        var album = this.model
+        var html = this.template(album.toJSON())
+        this.$el.html(html)
+        return this
+    },
+    // EVENTOS
+    navigate: function(e) {
+        Sfotipy.app.navigate( "album/" + this.model.get("name"),
+            {trigger: true})
+        return false
+    }
+
+})
