@@ -9,8 +9,9 @@ Sfotipy.Router = Backbone.Router.extend({
         this.albums = new Sfotipy.Collections.Albums()
         this.songs  = new Sfotipy.Collections.Songs()
         this.playlist  = new Sfotipy.Views.List({ collection: this.songs })
-        this.player    = new Sfotipy.Views.Player({ model: new Sfotipy.Models.Song() })
         this.albumlist = new Sfotipy.Views.Albums({ collection: this.albums })
+        this.player       = new Sfotipy.Views.Player({ model: new Sfotipy.Models.Song() })
+        this.current_song = new Sfotipy.Views.CurrentSong({ model: new Sfotipy.Models.Song() })
 
         Backbone.history.start()
     },
@@ -18,14 +19,14 @@ Sfotipy.Router = Backbone.Router.extend({
     index: function () {
         this.fetchData()
     },
-    album: function (name) {
+    album: function (album_name) {
         if (Object.keys(this.jsonData).length === 0) {
             var self = this
             this.fetchData().done(function () {
-                self.addSongs(name)
+                self.addSongs(album_name)
             })
         } else {
-            this.addSongs(name)
+            this.addSongs(album_name)
         }
             
     },
@@ -40,22 +41,29 @@ Sfotipy.Router = Backbone.Router.extend({
                     self.addAlbum (name, data[name])
         })
     },
-    addSongs: function (name) {
+    addSongs: function (album_name) {
         this.songs.reset()
-        this.current.album = this.jsonData[name]
+        var albumjson = this.jsonData[album_name]
+        this.current.album = this.albums.where({name:album_name})[0].toJSON()
+        this.current.album.songs = albumjson.songs
         this.current.album.songs.forEach(this.addSong, this)
     },
     addSong: function (song) {
         var album = this.current.album
-        this.songs.add (new Sfotipy.Models.Song({
+        var song_model = new Sfotipy.Models.Song({
             album_cover: album.cover,
             album_name:  album.name,
-            author: song.name,
+            author: album.author,
+            name: song.name,
             length: song.length
-        }))
+        })
+        this.songs.add (song_model)
+        if (this.songs.length == 1) {
+            this.player.model.set(song_model.toJSON())
+            this.current_song.model.set(song_model.toJSON())
+        }
     },
     addAlbum: function (name, album) {
-        console.log("Insertando album", name, album)
         this.albums.add (new Sfotipy.Models.Album({
             name: name,
             author: album.author,

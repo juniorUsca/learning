@@ -320,7 +320,7 @@
     </li>
   </script>
 
-  <script id="current-album-template" type="text/x-handlebars-template">
+  <script id="current-song-template" type="text/x-handlebars-template">
     <p class="name">
       {{name}}
     </p>
@@ -330,15 +330,17 @@
   </script>
 
   <script id="album-template" type="text/x-handlebars-template">
-    <figure class="image">
-      <img src="{{cover}}" width="128" height="128" alt="{{name}} - {{author}}">
-    </figure>
-    <p class="name">
-      {{name}}
-    </p>
-    <p class="author">
-      {{author}}
-    </p>
+    <!--article class="song"-->
+      <figure class="image">
+        <img src="{{cover}}" width="128" height="128" alt="{{name}} - {{author}}">
+      </figure>
+      <p class="name">
+        {{name}}
+      </p>
+      <p class="author">
+        {{author}}
+      </p>
+    <!--</article>-->
   </script>
 
   <script src="/lib/underscore.js"></script>
@@ -352,6 +354,7 @@
   <script type="text/javascript" src="js/collections/songs.js"></script>
   <script type="text/javascript" src="js/collections/albums.js"></script>
   <script type="text/javascript" src="js/views/player.js"></script>
+  <script type="text/javascript" src="js/views/current-song.js"></script>
   <script type="text/javascript" src="js/views/song.js"></script>
   <script type="text/javascript" src="js/views/list.js"></script>
   <script type="text/javascript" src="js/views/album.js"></script>
