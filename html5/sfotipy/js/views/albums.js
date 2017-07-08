@@ -1,5 +1,5 @@
 Sfotipy.Views.Albums = Backbone.View.extend({
-    el: $("albums"),
+    el: $("#albums"),
     
     template: Handlebars.compile( $("#album-template").html() ),
     initialize: function () {

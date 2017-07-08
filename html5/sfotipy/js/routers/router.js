@@ -55,6 +55,7 @@ Sfotipy.Router = Backbone.Router.extend({
         }))
     },
     addAlbum: function (name, album) {
+        console.log("Insertando album", name, album)
         this.albums.add (new Sfotipy.Models.Album({
             name: name,
             author: album.author,

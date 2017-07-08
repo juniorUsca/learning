@@ -1,10 +1,19 @@
 
-## Developing
+## Developing Stylus
 ```
 docker build -t juscah/stylus .
 docker run -ti --rm -v $(pwd):/app juscah/stylus sh
 stylus -u nib -c -w stylus/main.styl -o css
 ```
+
+## Developing Backbone
+```
+docker build -t juscah/sfotipy .
+docker run -ti --rm -v $(pwd):/app juscah/sfotipy sh
+npm install --no-bin-links
+node server.js
+```
+
 
 ## Production
 ```
