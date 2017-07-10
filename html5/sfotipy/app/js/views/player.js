@@ -1,4 +1,9 @@
-Sfotipy.Views.Player = Backbone.View.extend({
+var Backbone = require('backbone'),
+    Handlebars = require('handlebars'),
+    $ = require('jquery')
+
+module.exports = Backbone.View.extend({
+//Sfotipy.Views.Player = Backbone.View.extend({
     el: $(".music"),
 
     template: Handlebars.compile($("#player-template").html()),

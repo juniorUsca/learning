@@ -11,6 +11,7 @@ stylus -u nib -c -w stylus/main.styl -o css
 docker build -t juscah/sfotipy .
 docker run -ti --rm -v $(pwd):/app juscah/sfotipy sh
 npm install --no-bin-links
+npm run bundle
 node server.js
 ```
 

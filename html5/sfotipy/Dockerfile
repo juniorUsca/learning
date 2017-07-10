@@ -7,6 +7,8 @@ RUN cd /root && touch ".builded.$(date +%F_%R)" && cd / && \
     ## stylus and dependencies ##
     npm -g install stylus && \
     npm -g install nib && \
+    ## browserify and dependencies ##
+    npm -g install browserify && \
     ## server dependencies ##
     cd /app && \
     #npm install --no-bin-links && \

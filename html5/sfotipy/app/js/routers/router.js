@@ -6,7 +6,7 @@ var Backbone = require('backbone'),
     ListView = require('../views/list.js'),
     PlayerView = require('../views/player.js'),
     CurrentSongView = require('../views/current-song.js'),
-    AlbumsView = require('../views/list.js'),
+    AlbumsView = require('../views/albums.js'),
     $ = require('jquery')
 
 module.exports = Backbone.Router.extend({
@@ -62,7 +62,8 @@ module.exports = Backbone.Router.extend({
     addSongs: function (album_name) {
         this.songs.reset()
         var albumjson = this.jsonData[album_name]
-        this.current.album = this.albums.where({name:album_name})[0].toJSON()
+        this.current.album = this.albums.where({name:album_name})[0].toJSON();
+        //this.current.album = albumjson
         this.current.album.songs = albumjson.songs
         this.current.album.songs.forEach(this.addSong, this)
     },
