@@ -1,0 +1,10 @@
+-> Development
+-> Testing(Unitarias, Integracion) -(fail)-> Development
+-> Artefacto(Codigo, Contenedor) -(fail)-> Produccion
+-> QA (Pruebas de simulacion del fujo del usuario)
+    -> TA (Pruebas de Aceptacion) -(fail)-> Development
+                                  -(ok)-> Artefacto
+-> Production
+
+-> Monitoreo -(a)-> QA -(fail)-> Development
+             -(a)-> Production
