@@ -1,4 +1,16 @@
-Sfotipy.Router = Backbone.Router.extend({
+var Backbone = require('backbone'),
+    Albums = require('../collections/albums.js'),
+    Songs = require('../collections/songs.js'),
+    Album = require('../models/album.js'),
+    Song = require('../models/song.js'),
+    ListView = require('../views/list.js'),
+    PlayerView = require('../views/player.js'),
+    CurrentSongView = require('../views/current-song.js'),
+    AlbumsView = require('../views/list.js'),
+    $ = require('jquery')
+
+module.exports = Backbone.Router.extend({
+//Sfotipy.Router = Backbone.Router.extend({
     routes: {
         "": "index",
         "album/:name": "album"
@@ -6,12 +18,18 @@ Sfotipy.Router = Backbone.Router.extend({
     initialize: function () {
         this.current = {}
         this.jsonData = {}
-        this.albums = new Sfotipy.Collections.Albums()
-        this.songs  = new Sfotipy.Collections.Songs()
-        this.playlist  = new Sfotipy.Views.List({ collection: this.songs })
-        this.albumlist = new Sfotipy.Views.Albums({ collection: this.albums })
-        this.player       = new Sfotipy.Views.Player({ model: new Sfotipy.Models.Song() })
-        this.current_song = new Sfotipy.Views.CurrentSong({ model: new Sfotipy.Models.Song() })
+        this.albums = new Albums()
+        //this.albums = new Sfotipy.Collections.Albums()
+        this.songs  = new Songs()
+        //this.songs  = new Sfotipy.Collections.Songs()
+        this.playlist  = new ListView({ collection: this.songs })
+        //this.playlist  = new Sfotipy.Views.List({ collection: this.songs })
+        this.albumlist = new AlbumsView({ collection: this.albums })
+        //this.albumlist = new Sfotipy.Views.Albums({ collection: this.albums })
+        this.player       = new PlayerView({ model: new Song() })
+        //this.player       = new Sfotipy.Views.Player({ model: new Sfotipy.Models.Song() })
+        this.current_song = new CurrentSongView({ model: new Song() })
+        //this.current_song = new Sfotipy.Views.CurrentSong({ model: new Sfotipy.Models.Song() })
 
         Backbone.history.start()
     },
@@ -50,7 +68,8 @@ Sfotipy.Router = Backbone.Router.extend({
     },
     addSong: function (song) {
         var album = this.current.album
-        var song_model = new Sfotipy.Models.Song({
+        var song_model = new Song({
+        //var song_model = new Sfotipy.Models.Song({
             album_cover: album.cover,
             album_name:  album.name,
             author: album.author,
@@ -64,7 +83,8 @@ Sfotipy.Router = Backbone.Router.extend({
         }
     },
     addAlbum: function (name, album) {
-        this.albums.add (new Sfotipy.Models.Album({
+        this.albums.add (new Album({
+        //this.albums.add (new Sfotipy.Models.Album({
             name: name,
             author: album.author,
             cover:album.cover,

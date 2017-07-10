@@ -1,4 +1,9 @@
-Sfotipy.Views.Album = Backbone.View.extend({
+var Backbone = require('backbone'),
+    Handlebars = require('handlebars'),
+    $ = require('jquery')
+
+module.exports = Backbone.View.extend({  
+//Sfotipy.Views.Album = Backbone.View.extend({
     tagName: 'article',
     className: 'song',
     events: {
@@ -17,7 +22,8 @@ Sfotipy.Views.Album = Backbone.View.extend({
     },
     // EVENTOS
     navigate: function(e) {
-        Sfotipy.app.navigate( "album/" + this.model.get("name"),
+        Backbone.app.navigate( "album/" + this.model.get("name"),
+        //Sfotipy.app.navigate( "album/" + this.model.get("name"),
             {trigger: true})
         return false
     }

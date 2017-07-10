@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "spotify-backbone",
   "version": "0.1.0",
   "description": "Sfotipy",
   "main": "server.js",
@@ -7,9 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
-  "license": "",
+  "author": "Junior Usca Huacasi <junior.usca@gmail.com>",
+  "license": "GPL",
   "dependencies": {
+    "backbone": "^1.3.3",
+    "browserify": "^14.4.0",
+    "handlebars": "^4.0.10",
+    "jquery": "^3.2.1",
     "node-static": "^0.7.9"
   }
 }

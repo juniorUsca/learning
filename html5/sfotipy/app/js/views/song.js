@@ -1,4 +1,10 @@
-Sfotipy.Views.Song = Backbone.View.extend({
+var Backbone = require('backbone'),
+    Handlebars = require('handlebars'),
+    $ = require('jquery'),
+    app = Backbone.app
+
+module.exports = Backbone.View.extend({
+//Sfotipy.Views.Song = Backbone.View.extend({
     //tagName: 'li',
     //className: 'item',
     events: {
@@ -20,8 +26,10 @@ Sfotipy.Views.Song = Backbone.View.extend({
     },
     // EVENTOS
     add: function() {
-        Sfotipy.app.player.model.set(this.model.toJSON())
-        Sfotipy.app.current_song.model.set(this.model.toJSON())
+        Backbone.app.player.model.set(this.model.toJSON())
+        //Sfotipy.app.player.model.set(this.model.toJSON())
+        Backbone.app.current_song.model.set(this.model.toJSON())
+        //Sfotipy.app.current_song.model.set(this.model.toJSON())
         return false
     }
 
