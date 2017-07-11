@@ -1,7 +1,7 @@
 var http = require('http'),
     st = require('node-static'),
     opts = {cache: false},
-    file = new st.Server('./app', opts),
+    file = new st.Server('./public', opts),
     port = process.env.PORT || 8080
 
 http
@@ -10,4 +10,4 @@ http
     })
     .listen(port)
 
-console.log ("App running on http://localhost:%s", port)
+console.log ("App running on http://0.0.0.0:%s", port)

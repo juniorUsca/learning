@@ -1,12 +1,33 @@
 
-## Developing Stylus
+## Develop
+```
+docker build -t juscah/sfotipy-dev --file Dockerfile-dev .
+docker run -ti --rm -p 80:8080 -v $(pwd)/src:/app/src -v $(pwd)/public:/app/public -v $(pwd)/server:/app/server juscah/sfotipy-dev sh
+```
+
+```npm run stylus``` or
+```npm run build``` or
+```npm run start```
+
+
+
+## Production
+```
+docker build -t juscah/sfotipy --file Dockerfile-prod .
+docker run -d --rm -p 80:8080 --name sfotipy juscah/sfotipy
+docker logs -f sfotipy
+```
+
+
+
+### Developing Stylus
 ```
 docker build -t juscah/stylus .
 docker run -ti --rm -v $(pwd):/app juscah/stylus sh
 stylus -u nib -c -w stylus/main.styl -o css
 ```
 
-## Developing Backbone
+### Developing Backbone
 ```
 docker build -t juscah/sfotipy .
 docker run -ti --rm -v $(pwd):/app juscah/sfotipy sh
@@ -16,13 +37,8 @@ node server.js
 ```
 
 
-## Production
-```
-stylus -u nib -c stylus/main.styl -o css
-```
 
-
-### Dev
+## Dev
 
 - The normalize file is from: https://raw.githubusercontent.com/bymathias/normalize.styl/master/normalize.styl
 

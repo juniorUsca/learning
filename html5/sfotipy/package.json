@@ -4,8 +4,9 @@
   "description": "Sfotipy",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "gulp"
+    "start": "node ./server/server.js",
+    "build": "stylus -u nib -c ./src/stylus/main.styl -o ./src/css && gulp",
+    "stylus": "stylus -u nib -c -w ./src/stylus/main.styl -o ./src/css"
   },
   "author": "Junior Usca Huacasi <junior.usca@gmail.com>",
   "license": "GPL",
@@ -23,6 +24,8 @@
     "gulp-minify-css": "^1.2.4",
     "gulp-minify-html": "^1.0.6",
     "gulp-strip-debug": "^1.1.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "nib": "^1.1.2",
+    "stylus": "^0.54.5"
   }
 }
