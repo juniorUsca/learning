@@ -4,17 +4,25 @@
   "description": "Sfotipy",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "bundle": "browserify app/js/main.js -o app/js/app.js"
+    "build": "gulp"
   },
   "author": "Junior Usca Huacasi <junior.usca@gmail.com>",
   "license": "GPL",
   "dependencies": {
     "backbone": "^1.3.3",
-    "browserify": "^14.4.0",
     "handlebars": "^4.0.10",
     "jquery": "^3.2.1",
     "node-static": "^0.7.9"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-changed": "^3.1.0",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-strip-debug": "^1.1.0",
+    "gulp-uglify": "^3.0.0"
   }
 }

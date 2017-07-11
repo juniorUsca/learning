@@ -24,11 +24,13 @@ stylus -u nib -c stylus/main.styl -o css
 
 ### Dev
 
-The normalize file is from: https://raw.githubusercontent.com/bymathias/normalize.styl/master/normalize.styl
+- The normalize file is from: https://raw.githubusercontent.com/bymathias/normalize.styl/master/normalize.styl
 
-The icons are from: https://icomoon.io/app/#/select
-with ```Generate Font```
+- The icons are from: https://icomoon.io/app/#/select
+    with ```Generate Font```
 
+- Use imagemin from:
+    https://github.com/jessfraz/dockerfiles/blob/master/imagemin/Dockerfile
 
 
 ### Backbone
