@@ -58,7 +58,7 @@
 
   <section class="playing small medium large center-block">
     <div class="music">
-      <figure class="image relative">
+      <!--<figure class="image relative">
         <img src="img/song.jpg" alt="..." width="320" height="320">
         <div class="actions padding right-text">
           <a href="#" class="action icon-plus"></a>
@@ -88,13 +88,15 @@
           <a href="#" class="action gray icon-random"></a>
           <a href="#" class="action gray icon-volume"></a>
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="playlist right">
-      <p class="name">Girl</p>
-      <p class="author">Rafael Williams</p>
+      <div class="current">
+        <!--<p class="name">Girl</p>
+        <p class="author">Rafael Williams</p>-->
+      </div>
       <ul class="list">
-        <li class="item">
+        <!--<li class="item">
           <span>Marylin Monroe</span>
           <span class="right">
             <a href="#" class="action icon-plus gray"></a>
@@ -141,15 +143,15 @@
             <a href="#" class="action icon-love gray"></a>
             <a href="#" class="action icon-share gray"></a>
           </span>
-        </li>
+        </li>-->
 
       </ul>
     </div>
     
   </section>
 
-  <section class="container">
-    <article class="song">
+  <section id="albums" class="container">
+    <!--<article class="song">
       <figure class="image">
         <img src="img/song.jpg" width="128" height="128" alt="Girl Robert Williams">
       </figure>
@@ -269,7 +271,98 @@
       <p class="author">
         Robert Williams
       </p>
-    </article>
+    </article>-->
   </section>
+
+
+  <script id="player-template" type="text/x-handlebars-template">
+    <figure class="image relative">
+      <img src="{{album_cover}}" width="320" height="320" alt="{{name}} - {{author}}">
+      <div class="actions padding right-text">
+        <a href="#" class="action icon-plus"></a>
+        <a href="#" class="action icon-love"></a>
+        <a href="#" class="action icon-share"></a>
+      </div>
+    </figure>
+    <div class="padding">
+      <div class="progress">
+        <span class="min">0:45</span>
+        <div class="total">
+          <div class="state">
+            <div class="circle">
+            </div>
+          </div>
+        </div>
+        <span class="max">{{length}}</span>
+      </div>
+      <div class="description center-text border-bottom">
+        <p class="name">{{name}}</p>
+        <p class="author">{{author}}</p>
+      </div>
+      <div class="play center-text">
+        <a href="#" class="action gray icon-prev"></a>
+        <a href="#" class="action gray icon-play"></a>
+        <a href="#" class="action gray icon-next"></a>
+        <a href="#" class="action gray icon-random"></a>
+        <a href="#" class="action gray icon-volume"></a>
+      </div>
+    </div>
+  </script>
+
+  <script id="playlist-song-template" type="text/x-handlebars-template">
+    <li class="item">
+      <span>{{name}} - {{author}}</span>
+      <span class="right">
+        <a href="#" class="action icon-plus gray"></a>
+        <a href="#" class="action icon-love gray"></a>
+        <a href="#" class="action icon-share gray"></a>
+      </span>
+    </li>
+  </script>
+
+  <script id="current-song-template" type="text/x-handlebars-template">
+    <p class="name">
+      {{name}}
+    </p>
+    <p class="author">
+      {{author}}
+    </p>
+  </script>
+
+  <script id="album-template" type="text/x-handlebars-template">
+    <!--article class="song"-->
+      <figure class="image">
+        <img src="{{cover}}" width="128" height="128" alt="{{name}} - {{author}}">
+      </figure>
+      <p class="name">
+        {{name}}
+      </p>
+      <p class="author">
+        {{author}}
+      </p>
+    <!--</article>-->
+  </script>
+
+  <!--<script src="/lib/underscore.js"></script>
+  <script src="/lib/jquery-3.2.1.js"></script>
+  <script src="/lib/backbone.js"></script>
+  <script src="/lib/handlebars-v4.0.10.js"></script>
+  
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/models/song.js"></script>
+  <script type="text/javascript" src="js/models/album.js"></script>
+  <script type="text/javascript" src="js/collections/songs.js"></script>
+  <script type="text/javascript" src="js/collections/albums.js"></script>
+  <script type="text/javascript" src="js/views/player.js"></script>
+  <script type="text/javascript" src="js/views/current-song.js"></script>
+  <script type="text/javascript" src="js/views/song.js"></script>
+  <script type="text/javascript" src="js/views/list.js"></script>
+  <script type="text/javascript" src="js/views/album.js"></script>
+  <script type="text/javascript" src="js/views/albums.js"></script>
+  <script type="text/javascript" src="js/routers/router.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>-->
+
+  <script type="text/javascript" src="js/main.js"></script>
+
 </body>
 </html>
