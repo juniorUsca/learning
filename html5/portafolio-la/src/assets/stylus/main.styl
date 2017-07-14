@@ -1,0 +1,84 @@
+@import "normalize.styl"
+
+body
+    font-size 16px
+
+.verde_a
+    background #70AA39
+.verde_b
+    background #97c335
+.verde_c
+    background #cde147
+
+
+
+.mostly
+    max-width 64rem
+    margin 0 auto
+.mostly-row
+    overflow hidden
+    .mostly-column
+        width 50%
+        float left
+
+
+.columndrop
+    font-size 0
+.columndrop-row
+    font-size 1rem
+    width 25%
+    display inline-block
+    vertical-align top
+
+
+
+.shifter
+    max-width 64rem
+    margin 0 auto
+.shifter-top
+    margin-bottom 20px
+.shifter-bottom
+    padding 20px 0
+    overflow hidden
+.shifter-column
+    width 50%
+    float left
+
+
+.tweaks
+    max-width 768px
+    margin 0 auto
+    text-align center
+    font-size 16px
+.tweaks-name
+    font-size 5em
+.tweaks-username
+    font-size 2.5em
+.tweaks-bio
+    font-size 1.8em
+
+@media screen and (max-width 1024px)
+    .shifter
+        max-width 900px
+
+@media screen and (max-width 900px)
+    .columndrop-row
+        width 50%
+
+@media screen and (max-width 768px)
+    .columndrop-row
+        width 100%
+    
+    .shifter
+        max-width 300px
+
+    /*.tweaks-name
+        font-size 40px
+    .tweaks-username
+        font-size 30px*/
+    .tweaks
+        font-size .5rem
+    
+    .tweaks-img
+        width 100%
+        height auto
