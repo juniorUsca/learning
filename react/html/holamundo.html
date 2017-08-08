@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<main id="app"></main>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
+<script>
+    function Hola (props) {
+        const name = props.name;
+        return React.DOM.h1({
+            id: 'Title',
+        }, `Hola ${name}`);
+    }
+    const hola = React.createElement(Hola, {
+        name: 'Platzi',
+    });
+
+    ReactDOM.render(
+        hola,
+        document.getElementById('app')
+    );
+
+    setTimeout(
+        () => {
+            ReactDOM.render(
+                React.createElement(Hola, {
+                    name: 'Hola React',
+                }),
+                document.getElementById('app')
+            )
+        },
+        1000
+    )
+
+</script>
+
+</body>
+</html>
