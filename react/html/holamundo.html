@@ -9,31 +9,29 @@
 <body>
 
 <main id="app"></main>
-    
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
-<script>
+<script type="text/babel">
     function Hola (props) {
         const name = props.name;
-        return React.DOM.h1({
-            id: 'Title',
-        }, `Hola ${name}`);
+        return (
+            <h1 id="Ttitle">
+                Hola {name}
+            </h1>
+        );
     }
-    const hola = React.createElement(Hola, {
-        name: 'Platzi',
-    });
 
     ReactDOM.render(
-        hola,
+        <Hola name="Platzi" />,
         document.getElementById('app')
     );
 
     setTimeout(
         () => {
             ReactDOM.render(
-                React.createElement(Hola, {
-                    name: 'Hola React',
-                }),
+                <Hola name="Hola Platzi" />,
                 document.getElementById('app')
             )
         },
