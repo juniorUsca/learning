@@ -14,6 +14,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
 <script type="text/babel">
+    // componente:
+    // Funcion Pura
     function Hola (props) {
         const name = props.name;
         return (
@@ -23,15 +25,49 @@
         );
     }
 
+    // componente:
+    // Clase: Acceso a mas funcionalidades de react como el estado
+    //
+    // PureComponent: valida si los props y el estado cambiaron
+    // mejor rendimiento, recomendable usar solo en componentes que no tengan estado
+    // para no tener problemas de ambito(entorno)
+    class MiComponente extends React.Component{
+        constructor(props) {
+            super( props );
+
+            this.state = {
+                count: 0,
+            };
+            
+            // bind por el entorno en onClick
+            this.handleClick = this.handleClick.bind(this);
+        }
+
+        handleClick() {
+            this.setState({
+                count: this.state.count + 1,
+            });
+        }
+
+        render() {
+            const name = this.props.name;
+            return (
+                <h1 id="Title" onClick={this.handleClick}>
+                    Hola {name} {this.state.count}
+                </h1>
+            );
+        }
+    }
+
     ReactDOM.render(
-        <Hola name="Platzi" />,
+        <MiComponente name="Platzi" />,
         document.getElementById('app')
     );
 
     setTimeout(
         () => {
             ReactDOM.render(
-                <Hola name="Hola Platzi" />,
+                <MiComponente name="Hola Platzi" />,
                 document.getElementById('app')
             )
         },
