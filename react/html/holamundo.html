@@ -18,7 +18,7 @@
     // Funcion Pura
     function Hola (props) {
         return (
-            <h1 id="Title" onClick={props.onClick}>
+            <h1 id="Title" onClick={props.onClick} onMouseEnter={props.onMouseEnter}>
                 Hola {props.name} {props.count}
             </h1>
         );
@@ -40,6 +40,7 @@
             
             // bind por el entorno en onClick
             this.handleClick = this.handleClick.bind(this);
+            //this.handleMouseEnter = this.handleClick.bind(this);
         }
 
         componentWillMount() {
@@ -89,6 +90,10 @@
                 count: this.state.count + 1,
             });
         }
+        // solo necesitamos hacer bind cuando accedemos al this del componente
+        handleMouseEnter( event ) {
+            console.log( event )
+        }
 
         render() {
             return (
@@ -96,6 +101,7 @@
                     name={this.props.name}
                     count={this.state.count}
                     onClick={this.handleClick}
+                    onMouseEnter={this.handleMouseEnter}
                 />
             );
         }
