@@ -1,0 +1,14 @@
+{
+  "name": "react-blog",
+  "version": "0.0.1",
+  "description": "```\r docker build -t juscah/react-blog .\r docker run -ti --rm -v learning:/data juscah/react-blog sh\r ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "juniorUsca <junior.usca@gmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "react": "^15.6.1"
+  }
+}
