@@ -16,12 +16,17 @@
 <script type="text/babel">
     // componente:
     // Funcion Pura
-    function Hola (props) {
+    function Hola (props, context) {
         return (
             <h1 id="Title" onClick={props.onClick} onMouseEnter={props.onMouseEnter}>
-                Hola {props.name} {props.count}
+                Hola {props.name} {context.count}
             </h1>
         );
+    }
+
+    // accedemos al contexto desde Hola
+    Hola.contextTypes = {
+        count: React.PropTypes.number,
     }
 
     // componente:
@@ -95,6 +100,16 @@
             console.log( event )
         }
 
+        // CONTEXTO
+        //
+        // permite devolver los datos que queremos mandar al contexto de toda la aplicacion
+        getChildContext() {
+            return {
+                count: this.state.count,
+            };
+        }
+
+
         render() {
             return (
                 <Hola
@@ -105,6 +120,13 @@
                 />
             );
         }
+    }
+
+    // CONTEXTO
+    //
+    // define el tipo de dato del dato enviado al contexto
+    MiComponente.childContextTypes = {
+        count: React.PropTypes.number,
     }
 
     ReactDOM.render(
