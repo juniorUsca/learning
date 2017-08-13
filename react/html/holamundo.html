@@ -177,9 +177,30 @@
         count: React.PropTypes.number,
     }
 
+
+    // MIXIN
+    const mixin = {
+        handleClick() {
+            console.log( "clickeado" );
+        },
+    }
+
+    // los mixin solo funcionan con create class
+    const Componente = React.createClass({
+        mixins: [
+            mixin,
+        ],
+        render(){
+            return <div onClick={this.handleClick}>Hola</div>
+        }
+    })
+    // FIN DEL MIXIN
+
+
     ReactDOM.render(
         //<MiComponente name="Platzi" />,
-        <HolaHOC name="Platzi" />,
+        //<HolaHOC name="Platzi" />,
+        <Componente />,
         document.getElementById('app')
     );
 
