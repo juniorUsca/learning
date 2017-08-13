@@ -14,11 +14,55 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
 <script type="text/babel">
+
+    // este es un HOC (componente de alto orden)
+    function Counter(WrappedComponent) {
+        class CounterHOC extends React.Component {
+            constructor(props) {
+                super( props );
+
+                this.state = {
+                    count: 0,
+                }
+                this.handleClick = this.handleClick.bind(this);
+            }
+            getChildContext() {
+                return {
+                    count: this.state.count,
+                };
+            }
+            handleClick() {
+                this.setState({
+                    count: this.state.count + 1,
+                });
+            }
+            render() {
+                // los ... 3 puntos son una forma de decir a los datos desconponganse y apliquense a este componente
+                // una forma manual de hacerlo seria de esta forma, pero como no sabemos los nombres
+                // usamos los 3puntos
+                // <WrappedComponent onClick={props.onClick} onMouseEnter={props.onMouseEnter} >
+                return(
+                    <WrappedComponent
+                        onClick={this.handleClick}
+                        {...this.props}
+                    />
+                )
+            }
+        }
+        
+        CounterHOC.childContextTypes = {
+            count: React.PropTypes.number,
+        }
+
+        return CounterHOC;
+    }
+    
+
     // componente:
     // Funcion Pura
     function Hola (props, context) {
         return (
-            <h1 id="Title" onClick={props.onClick} onMouseEnter={props.onMouseEnter}>
+            <h1 id="Title" onClick={props.onClick}>
                 Hola {props.name} {context.count}
             </h1>
         );
@@ -28,6 +72,10 @@
     Hola.contextTypes = {
         count: React.PropTypes.number,
     }
+
+    const HolaHOC = Counter(Hola);
+
+
 
     // componente:
     // Clase: Acceso a mas funcionalidades de react como el estado
@@ -130,11 +178,12 @@
     }
 
     ReactDOM.render(
-        <MiComponente name="Platzi" />,
+        //<MiComponente name="Platzi" />,
+        <HolaHOC name="Platzi" />,
         document.getElementById('app')
     );
 
-    setTimeout(
+    /*setTimeout(
         () => {
             ReactDOM.render(
                 <MiComponente name="Hola Platzi" />,
@@ -142,7 +191,7 @@
             )
         },
         1000
-    )
+    )*/
 
 </script>
 
