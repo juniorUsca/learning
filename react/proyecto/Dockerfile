@@ -12,12 +12,12 @@ WORKDIR /app
 #		build-base \
 #		libpng-dev \
 #		nasm && \
-#RUN npm install && \
+RUN npm install && \
 #	apk del .build-deps && \
     ## stylus and dependencies ##
 #    npm -g install stylus && \
 #    npm -g install nib && \
-#    npm cache clean
+    npm cache clean
 COPY . /app
-#EXPOSE 8080
+EXPOSE 3000
 #CMD ["npm", "run", "start"]
