@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import api from '../../api.js';
+
 import Post from '../../posts/containers/Post.jsx';
+import Loading from '../../shared/components/Loading.jsx';
 
 class Home extends Component {
   constructor( props ){
@@ -29,7 +31,7 @@ class Home extends Component {
 
         <section>
           {this.state.loading && (
-            <h2>Loading posts..</h2>
+            <Loading />
           )}
           {
             this.state.posts.map(
