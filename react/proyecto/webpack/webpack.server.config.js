@@ -1,4 +1,9 @@
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const nib = require('nib')
+
+const ExtractCSS = new ExtractTextPlugin('../statics/styles.css');
+const ExtractSTYL = new ExtractTextPlugin('../statics/main.css');
 
 module.exports = {
   entry: './source/server.js',
@@ -19,8 +24,26 @@ module.exports = {
         query: {
           presets: ['latest-minimal', 'react'],
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractCSS.extract({ fallback: 'style-loader', use: 'css-loader?modules' }),
+      },
+      {
+        test: /\.styl$/,
+        loader: ExtractSTYL.extract({ fallback: 'style-loader', use: ['css-loader?modules', {
+          loader: 'stylus-loader',
+          options: {
+            use: [nib()]
+          }
+        }] }),
+      },
     ]
   },
   target: 'node',
+  plugins: [
+    // new ExtractTextPlugin('../statics/styles.css'),
+    ExtractSTYL,
+    ExtractCSS,
+  ],
 };

@@ -6,6 +6,8 @@ function Layout( props ){
       <head>
         <meta charSet="utf-8" />
         <title>{props.title}</title>
+        <link rel="stylesheet" href="http://localhost:3001/main.css" />
+        <link rel="stylesheet" href="http://localhost:3001/styles.css" />
       </head>
       <body>
         <div
