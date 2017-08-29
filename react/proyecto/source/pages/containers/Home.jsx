@@ -43,6 +43,7 @@ class Home extends Component {
     if( !(scrolled + viewportHeight + 300 >= fullHeight) ){
       return null;
     }
+    // TODO: agregar un if para que no haya carga mas alla de la pagina 10
 
     this.setState({
       loading: true,

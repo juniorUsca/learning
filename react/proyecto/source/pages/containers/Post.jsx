@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import PostBody from '../../posts/containers/Post.jsx';
+import Comment from '../../comments/components/Comment.jsx';
 import Loading from '../../shared/components/Loading.jsx';
 
 import api from '../../api.js';
@@ -16,7 +17,6 @@ class Post extends Component {
       comments: [],
     }
   }
-
 
   async componentDidMount(){
     const [ post, comments ] = await Promise.all([
@@ -39,11 +39,21 @@ class Post extends Component {
       return( <Loading /> );
     }
     return (
-      <PostBody
-        user = {this.state.user}
-        comments = {this.state.comments}
-        {...this.state.post}
-      />
+      <section name="post">
+        <PostBody
+          user = {this.state.user}
+          comments = {this.state.comments}
+          {...this.state.post}
+        />
+        <section>
+          {
+            this.state.comments
+              .map( comment => (
+                <Comment key={comment.id} {...comment} />
+              ))
+          }
+        </section>
+      </section>
     );
   }
 }
