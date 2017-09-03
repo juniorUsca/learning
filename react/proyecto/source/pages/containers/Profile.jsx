@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import Post from '../../posts/containers/Post.jsx';
-import Loading from '../../shared/components/Loading.jsx';
+import Post from '../../posts/containers/Post';
+import Loading from '../../shared/components/Loading';
 
-import api from '../../api.js';
+import api from '../../api';
 
 class Profile extends Component {
   constructor(props) {
@@ -16,12 +17,16 @@ class Profile extends Component {
     };
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
+    this.initialFetch()
+  }
+
+  async initialFetch() {
     const [user, posts] = await Promise.all([
       api.users.getSingle(this.props.match.params.id),
       api.users.getPosts(this.props.match.params.id),
     ]);
-    console.log(user);
+    // console.log(user);
 
     this.setState({
       loading: false,
@@ -31,8 +36,8 @@ class Profile extends Component {
   }
 
   render() {
-    if( this.state.loading ) {
-      return(
+    if (this.state.loading) {
+      return (
         <Loading />
       );
     }
@@ -49,17 +54,17 @@ class Profile extends Component {
           <fieldset>
             <legend>Address</legend>
             <address>
-              {this.state.user.address.street}<br/>
-              {this.state.user.address.suite}<br/>
-              {this.state.user.address.city}<br/>
-              {this.state.user.address.zipcode}<br/>
+              {this.state.user.address.street}<br />
+              {this.state.user.address.suite}<br />
+              {this.state.user.address.city}<br />
+              {this.state.user.address.zipcode}<br />
             </address>
           </fieldset>
         )}
 
         <section>
           {this.state.posts.map(
-            post => <Post key={post.id} user={this.state.user} {...post} />
+            post => <Post key={post.id} user={this.state.user} {...post} />,
           )}
         </section>
 
@@ -72,6 +77,21 @@ class Profile extends Component {
       </section>
     );
   }
+}
+
+Profile.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+}
+Profile.defaultProps = {
+  match: {
+    params: {
+      id: '1',
+    },
+  },
 }
 
 export default Profile;

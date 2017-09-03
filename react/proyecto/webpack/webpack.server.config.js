@@ -6,13 +6,19 @@ const ExtractCSS = new ExtractTextPlugin('../statics/styles.css');
 const ExtractSTYL = new ExtractTextPlugin('../statics/main.css');
 
 module.exports = {
-  entry: './source/server.js',
+  entry: './source/server.jsx',
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, '../built/server'),
   },
   module: {
-    loaders: [
+    rules: [ // cambiamos loaders por rules
+      {
+        test: /\.jsx?$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        exclude: /(node_modules)/,
+      },
       {
         test: /\.json$/,
         loader: 'json-loader',
@@ -23,7 +29,7 @@ module.exports = {
         exclude: /(node_modules)/,
         query: {
           presets: ['latest-minimal', 'react'],
-        }
+        },
       },
       {
         test: /\.css$/,
@@ -31,16 +37,21 @@ module.exports = {
       },
       {
         test: /\.styl$/,
-        loader: ExtractSTYL.extract({ fallback: 'style-loader', use: ['css-loader?modules', {
-          loader: 'stylus-loader',
-          options: {
-            use: [nib()]
-          }
-        }] }),
+        loader: ExtractSTYL.extract({ fallback: 'style-loader',
+          use: ['css-loader?modules', {
+            loader: 'stylus-loader',
+            options: {
+              use: [nib()],
+            },
+          }],
+        }),
       },
-    ]
+    ],
   },
   target: 'node',
+  resolve: {
+    extensions: ['.js', '.jsx', '.css', '.styl'],
+  },
   plugins: [
     // new ExtractTextPlugin('../statics/styles.css'),
     ExtractSTYL,

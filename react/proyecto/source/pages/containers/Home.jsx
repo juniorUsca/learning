@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import api from '../../api.js';
+import api from '../../api';
 
-import Post from '../../posts/containers/Post.jsx';
-import Loading from '../../shared/components/Loading.jsx';
+import Post from '../../posts/containers/Post';
+import Loading from '../../shared/components/Loading';
 import styles from './Page.css';
 import styl from './Page.styl';
 
 class Home extends Component {
-  constructor( props ){
+  constructor(props) {
     super(props);
     this.state = {
       page: 1,
@@ -20,34 +20,42 @@ class Home extends Component {
     this.handleScroll = this.handleScroll.bind(this);
   }
 
-  async componentDidMount() {
-    const posts = await api.posts.getList( this.state.page );
-    console.log("posts getted", posts);
-    this.setState({
-      posts, // equivale a posts:posts,
-      page: this.state.page+1,
-      loading: false,
-    });
+  componentDidMount() {
+    this.initialFetch()
 
     window.addEventListener('scroll', this.handleScroll);
   }
 
-  handleScroll(event){
-    if( this.state.loading ) return null;
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  async initialFetch() {
+    const posts = await api.posts.getList(this.state.page);
+    // console.log('posts getted', posts);
+    this.setState({
+      posts, // equivale a posts:posts,
+      page: this.state.page + 1,
+      loading: false,
+    });
+  }
+
+  handleScroll() {
+    if (this.state.loading) return null;
 
     const scrolled = window.scrollY;
     const viewportHeight = window.innerHeight;
     // const fullHeight = document.body.clientHeight;
     const fullHeight = document.documentElement.clientHeight;
 
-    console.log( scrolled, viewportHeight, fullHeight );
+    // console.log(scrolled, viewportHeight, fullHeight);
 
-    if( !(scrolled + viewportHeight + 300 >= fullHeight) ){
+    if (!(scrolled + viewportHeight + 300 >= fullHeight)) {
       return null;
     }
     // TODO: agregar un if para que no haya carga mas alla de la pagina 10
 
-    this.setState({
+    return this.setState({
       loading: true,
     }, async () => {
       try {
@@ -57,15 +65,11 @@ class Home extends Component {
           page: this.state.page + 1,
           loading: false,
         });
-      } catch(error) {
-        console.log(error);
+      } catch (error) {
+        console.error(error);
         this.setState({ loading: false });
       }
     });
-  }
-
-  componentWillUnmount(){
-    window.removeEventListener('scroll', this.handleScroll);
   }
 
   render() {
@@ -76,7 +80,7 @@ class Home extends Component {
         <section className={styles.list}>
           {
             this.state.posts.map(
-              post => <Post key={post.id} {...post} />
+              post => <Post key={post.id} {...post} />,
             )
           }
           {this.state.loading && (

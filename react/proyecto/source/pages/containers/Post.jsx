@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import PostBody from '../../posts/containers/Post.jsx';
-import Comment from '../../comments/components/Comment.jsx';
-import Loading from '../../shared/components/Loading.jsx';
+import PostBody from '../../posts/containers/Post';
+import Comment from '../../comments/components/Comment';
+import Loading from '../../shared/components/Loading';
 
-import api from '../../api.js';
+import api from '../../api';
 
 class Post extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      loading:true,
+      loading: true,
       post: {},
       user: {},
       comments: [],
     }
   }
 
-  async componentDidMount(){
-    const [ post, comments ] = await Promise.all([
+  componentDidMount() {
+    this.initialFetch()
+  }
+
+  async initialFetch() {
+    const [
+      post,
+      comments,
+    ] = await Promise.all([
       api.posts.getSingle(this.props.match.params.id),
       api.posts.getComments(this.props.match.params.id),
     ]);
@@ -35,20 +42,20 @@ class Post extends Component {
   }
 
   render() {
-    if( this.state.loading ) {
-      return( <Loading /> );
+    if (this.state.loading) {
+      return (<Loading />);
     }
     return (
       <section name="post">
         <PostBody
-          user = {this.state.user}
-          comments = {this.state.comments}
+          user={this.state.user}
+          comments={this.state.comments}
           {...this.state.post}
         />
         <section>
           {
             this.state.comments
-              .map( comment => (
+              .map(comment => (
                 <Comment key={comment.id} {...comment} />
               ))
           }
@@ -56,6 +63,22 @@ class Post extends Component {
       </section>
     );
   }
+}
+
+Post.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+}
+
+Post.defaultProps = {
+  match: {
+    params: {
+      id: '1',
+    },
+  },
 }
 
 export default Post;

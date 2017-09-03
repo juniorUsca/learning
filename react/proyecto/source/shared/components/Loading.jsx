@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Loading(props) {
-  return(
+function Loading() {
+  return (
     <h3>loading...</h3>
   );
 }

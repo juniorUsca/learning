@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import api from '../../api.js';
+import api from '../../api';
 
 class Post extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -15,7 +15,11 @@ class Post extends Component {
     };
   }
 
-  async componentDidMount(){
+  componentDidMount() {
+    this.initialFetch()
+  }
+
+  async initialFetch() {
     const [user, comments] = await Promise.all([
       !this.state.user ? api.users.getSingle(this.props.userId) : Promise.resolve(null),
       !this.state.comments ? api.posts.getComments(this.props.id) : Promise.resolve(null),
@@ -28,8 +32,8 @@ class Post extends Component {
     });
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <article id={`post-${this.props.id}`}>
         <Link to={`/post/${this.props.id}`}>
           <h2>{this.props.title}</h2>
@@ -52,10 +56,23 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-  id: PropTypes.number,
-  userId: PropTypes.number,
-  title: PropTypes.string,
-  body: PropTypes.string,
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    website: PropTypes.string,
+  }),
+  comments: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
+
+  id: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+}
+Post.defaultProps = {
+  user: null,
+  comments: null,
 }
 
 export default Post;
