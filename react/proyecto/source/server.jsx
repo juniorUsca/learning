@@ -8,6 +8,10 @@ import Pages from './pages/containers/Page';
 import Layout from './pages/components/Layout';
 import messages from './messages.json'
 
+const staticsDomain = process.env.NODE_ENV === 'production' ?
+  'https://junior-react-statics.now.sh' :
+  'http://localhost:3001'
+
 function requestHandler(req, res) {
   // vemos en q lenguage esta el navegador
   const locale = req.headers['accept-language'].indexOf('es') >= 0 ? 'es' : 'en'
@@ -39,6 +43,7 @@ function requestHandler(req, res) {
       <Layout
         title="Aplicación"
         content={html}
+        domain={staticsDomain}
       />,
     ),
   );

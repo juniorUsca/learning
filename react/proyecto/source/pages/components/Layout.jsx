@@ -7,8 +7,8 @@ function Layout(props) {
       <head>
         <meta charSet="utf-8" />
         <title>{props.title}</title>
-        <link rel="stylesheet" href="http://localhost:3001/main.css" />
-        <link rel="stylesheet" href="http://localhost:3001/styles.css" />
+        <link rel="stylesheet" href={`${props.domain}/main.css`} />
+        <link rel="stylesheet" href={`${props.domain}/styles.css`} />
       </head>
       <body>
         <div
@@ -17,7 +17,7 @@ function Layout(props) {
             __html: props.content,
           }}
         />
-        <script src="http://localhost:3001/app.js" />
+        <script src={`${props.domain}/app.js`} />
       </body>
     </html>
   );
@@ -26,6 +26,7 @@ function Layout(props) {
 Layout.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  domain: PropTypes.string.isRequired,
 }
 
 Layout.defaultProps = {}
