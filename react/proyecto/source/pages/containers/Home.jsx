@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl'
 
 import api from '../../api';
 
@@ -75,7 +76,10 @@ class Home extends Component {
   render() {
     return (
       <section name="Home" className={styl.section}>
-        <h1>Home</h1>
+        <FormattedMessage
+          id="title.home"
+          tagName="h1"
+        />
 
         <section className={styles.list}>
           {

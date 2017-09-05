@@ -1,13 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl'
+
 import styles from './Header.css';
 
 function Header() {
   return (
     <header className={styles.header}>
-      <h1>Mi super blog</h1>
+      <h1>
+        <FormattedMessage id="title" />
+      </h1>
       <nav>
-        <Link to="/">Home</Link>
+        <Link to="/">
+          <FormattedMessage id="header.nav.home" />
+        </Link>
       </nav>
     </header>
   );
