@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import api from '../../api';
+// import api from '../../api';
 
 import Post from '../../posts/containers/Post';
 import Loading from '../../shared/components/Loading';
@@ -34,11 +35,11 @@ class Home extends Component {
   }
 
   async initialFetch() {
-    const posts = await api.posts.getList(this.props.page);
-
-    this.props.dispatch(
-      actions.setPosts(posts),
-    )
+    // const posts = await api.posts.getList(this.props.page);
+    // this.props.dispatch(
+    //   actions.setPosts(posts),
+    // )
+    await this.props.actions.postsNextPage()
     // console.log('posts getted', posts);
     this.setState({
       loading: false,
@@ -64,10 +65,11 @@ class Home extends Component {
       loading: true,
     }, async () => {
       try {
-        const posts = await api.posts.getList(this.props.page);
-        this.props.dispatch(
-          actions.setPosts(posts),
-        )
+        // const posts = await api.posts.getList(this.props.page);
+        // this.props.dispatch(
+        //   actions.setPosts(posts),
+        // )
+        await this.props.actions.postsNextPage()
         this.setState({
           loading: false,
         });
@@ -110,7 +112,8 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   page: PropTypes.number.isRequired,
 }
@@ -125,12 +128,12 @@ function mapStateToProps(state) {
   };
 }
 
-/*
- * function mapDispatchToProps(dispatch, props) {
- *   return {
- *     dipatch,
- *   };
- * }
- */
 
-export default connect(mapStateToProps)(Home);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
