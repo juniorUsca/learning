@@ -3,10 +3,12 @@ import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { IntlProvider } from 'react-intl'
+import { Provider } from 'react-redux'
 
 import Pages from './pages/containers/Page';
 import Layout from './pages/components/Layout';
 import messages from './messages.json'
+import store from './store'
 
 const staticsDomain = process.env.NODE_ENV === 'production' ?
   'https://junior-react-statics.now.sh' :
@@ -18,13 +20,13 @@ function requestHandler(req, res) {
   const context = {};
 
   const html = renderToString(
-    // <Provider store={store}>
-    <IntlProvider locale={locale} messages={messages[locale]}>
-      <StaticRouter location={req.url} context={context}>
-        <Pages />
-      </StaticRouter>
-    </IntlProvider>,
-    // </Provider>
+    <Provider store={store}>
+      <IntlProvider locale={locale} messages={messages[locale]}>
+        <StaticRouter location={req.url} context={context}>
+          <Pages />
+        </StaticRouter>
+      </IntlProvider>
+    </Provider>,
   );
 
 
