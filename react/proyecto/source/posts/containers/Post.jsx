@@ -14,8 +14,9 @@ class Post extends Component {
 
     this.state = {
       loading: true,
-      user: props.user || null,
-      comments: props.comments || null,
+      // obtenemos estos datos directamente del state
+      // user: props.user || null,
+      // comments: props.comments || null,
     };
   }
 
@@ -24,7 +25,8 @@ class Post extends Component {
   }
 
   async initialFetch() {
-    if (!!this.props.user && !!this.props.comments) {
+    console.log('POST', this.props.user, this.props.comments)
+    if (this.props.user && this.props.comments.size > 0) {
       return this.setState({ loading: false })
     }
 
@@ -55,16 +57,16 @@ class Post extends Component {
         <p>{this.props.body}</p>a
         {!this.state.loading && (
           <div>
-            <Link to={`/user/${this.props.user.id}`}>Perfil de {this.props.user.name}</Link>
+            <Link to={`/user/${this.props.user.get('id')}`}>Perfil de {this.props.user.get('name')}</Link>
             <br />
-            <a href={`//${this.props.user.website}`} target="_blank" rel="nofollow">
-              {this.props.user.name}
+            <a href={`//${this.props.user.get('website')}`} target="_blank" rel="nofollow">
+              {this.props.user.get('name')}
             </a>
             <span>
               <FormattedMessage
                 id="post.meta.comments"
                 values={{
-                  amount: this.props.comments.length,
+                  amount: this.props.comments.size,
                 }}
               />
               <Link to={`/post/${this.props.id}`}>
@@ -83,10 +85,16 @@ Post.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     website: PropTypes.string,
+
+    size: PropTypes.number, // es una propiedad que tienen todos los objetos inmutables
+    get: PropTypes.func, // funcion para obtener datos de inmutables
   }),
-  comments: PropTypes.arrayOf(
-    PropTypes.object,
-  ),
+  // comments: PropTypes.objectOf( // cambiamos arrayOf a objectOf
+  //   PropTypes.object,
+  // ),
+  comments: PropTypes.shape({ // cambiamos arrayOf a objectOf
+    size: PropTypes.number, // es una propiedad que tienen todos los objetos inmutables
+  }),
 
   id: PropTypes.number.isRequired,
   userId: PropTypes.number.isRequired,
@@ -102,8 +110,14 @@ Post.defaultProps = {
 
 function mapStateToProps(state, props) {
   return {
-    comments: state.comments.filter(comment => comment.postId === props.id),
-    user: state.users[props.userId],
+    // comments: state.comments.filter(comment => comment.postId === props.id),
+    // user: state.users[props.userId],
+    comments: state
+      .get('comments')
+      .filter(comment => comment.get('postId') === props.id),
+    user: state
+      .get('users')
+      .get(props.userId),
   };
 }
 function mapDispatchToProps(dispatch) {

@@ -26,7 +26,8 @@ function postsNextPage() {
   return async (dispatch, getState) => {
     console.log('accion asincrona');
     const state = getState()
-    const currentPage = state.posts.page
+    // const currentPage = state.posts.page
+    const currentPage = state.get('posts').get('page')
     const posts = await api.posts.getList(currentPage)
     dispatch(
       setPosts(posts),

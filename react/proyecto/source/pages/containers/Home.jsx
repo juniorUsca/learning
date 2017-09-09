@@ -91,9 +91,11 @@ class Home extends Component {
 
         <section className={styles.list}>
           {
-            this.props.posts.map(
-              post => <Post key={post.id} {...post} />,
-            )
+            this.props.posts
+              .map( // map retorna un array inmutable
+                post => <Post key={post.get('id')} {...post.toJS()} />,
+              )
+              .toArray() // convertimos a un array de JS
           }
           {this.state.loading && (
             <Loading />
@@ -114,7 +116,12 @@ class Home extends Component {
 Home.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   actions: PropTypes.objectOf(PropTypes.func).isRequired,
-  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  // posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  // posts: PropTypes.objectOf(PropTypes.object).isRequired,
+  posts: PropTypes.shape({ // posts es un objectof immutable
+    map: PropTypes.func,
+    size: PropTypes.number,
+  }).isRequired,
   page: PropTypes.number.isRequired,
 }
 
@@ -123,8 +130,10 @@ Home.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts.entities,
-    page: state.posts.page,
+    // posts: state.posts.entities,
+    // page: state.posts.page,
+    posts: state.get('posts').get('entities'),
+    page: state.get('posts').get('page'),
   };
 }
 
