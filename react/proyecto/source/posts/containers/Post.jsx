@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-import api from '../../api';
+// import api from '../../api';
+import actions from '../../actions'
 
 class Post extends Component {
   constructor(props) {
@@ -21,15 +24,25 @@ class Post extends Component {
   }
 
   async initialFetch() {
-    const [user, comments] = await Promise.all([
-      !this.state.user ? api.users.getSingle(this.props.userId) : Promise.resolve(null),
-      !this.state.comments ? api.posts.getComments(this.props.id) : Promise.resolve(null),
-    ]);
+    if (!!this.props.user && !!this.props.comments) {
+      return this.setState({ loading: false })
+    }
 
-    this.setState({
+    await Promise.all([
+      this.props.actions.loadUser(this.props.userId),
+      this.props.actions.loadCommentsForPost(this.props.id),
+    ])
+
+
+    // const [user, comments] = await Promise.all([
+    //   !this.state.user ? api.users.getSingle(this.props.userId) : Promise.resolve(null),
+    //   !this.state.comments ? api.posts.getComments(this.props.id) : Promise.resolve(null),
+    // ]);
+
+    return this.setState({
       loading: false,
-      user: user || this.state.user,
-      comments: comments || this.state.comments,
+      // user: user || this.state.user,
+      // comments: comments || this.state.comments,
     });
   }
 
@@ -39,18 +52,19 @@ class Post extends Component {
         <Link to={`/post/${this.props.id}`}>
           <h2>{this.props.title}</h2>
         </Link>
-        <p>{this.props.body}</p>
+        <p>{this.props.body}</p>a
         {!this.state.loading && (
           <div>
-            <Link to={`/user/${this.state.user.id}`}>Perfil de {this.state.user.name}</Link>
-            <a href={`//${this.state.user.website}`} target="_blank" rel="nofollow">
-              {this.state.user.name}
+            <Link to={`/user/${this.props.user.id}`}>Perfil de {this.props.user.name}</Link>
+            <br />
+            <a href={`//${this.props.user.website}`} target="_blank" rel="nofollow">
+              {this.props.user.name}
             </a>
             <span>
               <FormattedMessage
                 id="post.meta.comments"
                 values={{
-                  amount: this.state.comments.length,
+                  amount: this.props.comments.length,
                 }}
               />
               <Link to={`/post/${this.props.id}`}>
@@ -78,10 +92,24 @@ Post.propTypes = {
   userId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
+
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
 }
 Post.defaultProps = {
   user: null,
   comments: null,
 }
 
-export default Post;
+function mapStateToProps(state, props) {
+  return {
+    comments: state.comments.filter(comment => comment.postId === props.id),
+    user: state.users[props.userId],
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

@@ -37,7 +37,7 @@ function postsNextPage() {
 
 function loadCommentsForPost(postId) {
   return async (dispatch) => {
-    const comments = await api.post.getComments(postId)
+    const comments = await api.posts.getComments(postId)
     dispatch(
       setComments(comments),
     )
