@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import reducer from './reducer'
 
@@ -21,10 +22,12 @@ import reducer from './reducer'
 // 2DO parametro: recibe el estado inicial o un enhancer(el enhancer puede ser un middleware)
 const store = createStore(
   reducer,
-  applyMiddleware(
-    // logger,
-    createLogger(),
-    thunk,
+  composeWithDevTools(
+    applyMiddleware(
+      // logger,
+      createLogger(),
+      thunk,
+    ),
   ),
 );
 
