@@ -8,6 +8,13 @@ function setPosts(posts) {
   };
 }
 
+function setPost(post) {
+  return {
+    type: 'SET_POST',
+    payload: post,
+  };
+}
+
 function setComments(comments) {
   return {
     type: 'SET_COMMENTS',
@@ -56,6 +63,26 @@ function loadUser(userId) {
   };
 }
 
+function loadUserPosts(userId) {
+  return async (dispatch) => {
+    const posts = await api.users.getPosts(userId)
+    dispatch(
+      setPosts(posts),
+    )
+    return posts;
+  };
+}
+
+function loadPost(id) {
+  return async (dispatch) => {
+    const post = await api.posts.getSingle(id)
+    dispatch(
+      setPost(post),
+    )
+    return post;
+  };
+}
+
 export default {
   setPosts,
   setComments,
@@ -63,4 +90,6 @@ export default {
   postsNextPage,
   loadCommentsForPost,
   loadUser,
+  loadUserPosts,
+  loadPost,
 };

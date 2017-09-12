@@ -40,6 +40,8 @@ function postsEntitiesReducer(state = initialState.get('posts').get('entities'),
           (posts, post) => posts.set(post.id, map(post)), // posts es el acumulador
           state, // acumulador
         )
+    case 'SET_POST':
+      return state.set(action.payload.id, map(action.payload))
     default:
       return state
   }
