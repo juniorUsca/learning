@@ -56,6 +56,16 @@ function loadUser(userId) {
   };
 }
 
+function loadUserPosts(userId) {
+  return async (dispatch) => {
+    const posts = await api.users.getPosts(userId)
+    dispatch(
+      setPosts(posts),
+    )
+    return posts;
+  };
+}
+
 export default {
   setPosts,
   setComments,
@@ -63,4 +73,5 @@ export default {
   postsNextPage,
   loadCommentsForPost,
   loadUser,
+  loadUserPosts,
 };

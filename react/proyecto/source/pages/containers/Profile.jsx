@@ -2,37 +2,50 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import Post from '../../posts/containers/Post';
 import Loading from '../../shared/components/Loading';
 
-import api from '../../api';
+// import api from '../../api';
+import actions from '../../actions'
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      posts: [],
-      user: {},
+      // posts: [],
+      // user: {},
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.initialFetch()
   }
 
   async initialFetch() {
-    const [user, posts] = await Promise.all([
-      api.users.getSingle(this.props.match.params.id),
-      api.users.getPosts(this.props.match.params.id),
-    ]);
+    // const [user, posts] = await Promise.all([
+    //   api.users.getSingle(this.props.match.params.id),
+    //   api.users.getPosts(this.props.match.params.id),
+    // ]);
     // console.log(user);
+    console.log(this.props)
+    /* if (!!this.props.user && !!this.props.posts) {
+      console.log('existe')
+      return this.setState({ loading: false })
+    } */
+    console.log('cargand')
+    await Promise.all([
+      this.props.actions.loadUser(this.props.match.params.id),
+      this.props.actions.loadUserPosts(this.props.match.params.id),
+    ]);
 
-    this.setState({
+    return this.setState({
       loading: false,
-      posts,
-      user,
+      // posts,
+      // user,
     });
   }
 
@@ -42,38 +55,43 @@ class Profile extends Component {
         <Loading />
       );
     }
+    const address = this.props.user.get('address')
     return (
       <section name="Profile">
         <h2>
           <FormattedMessage
             id="title.profile"
             values={{
-              name: this.state.user.name,
+              // name: this.state.user.name,
+              name: this.props.user.get('name'),
             }}
           />
-      Profile of {this.state.user.name}</h2>
+      Profile of {this.props.user.get('name')}</h2>
 
         <fieldset>
           <FormattedMessage id="profile.field.basic" tagName="legend" />
-          <input type="email" value={this.state.user.email} disabled />
+          <input type="email" value={this.props.user.get('email')} disabled />
         </fieldset>
 
-        {this.state.user.address && (
+        {this.props.user.get('address') && (
           <fieldset>
             <FormattedMessage id="profile.field.address" tagName="legend" />
             <address>
-              {this.state.user.address.street}<br />
-              {this.state.user.address.suite}<br />
-              {this.state.user.address.city}<br />
-              {this.state.user.address.zipcode}<br />
+              {this.props.user.get('address').street}<br />
+              {this.props.user.get('address').suite}<br />
+              {this.props.user.get('address').city}<br />
+              {this.props.user.get('address').zipcode}<br />
             </address>
           </fieldset>
         )}
 
         <section>
-          {this.state.posts.map(
-            post => <Post key={post.id} user={this.state.user} {...post} />,
-          )}
+          {this.props.posts
+            .map( // map retorna un array inmutable
+              post => <Post key={post.get('id')} user={this.props.user} {...post.toJS()} />,
+            )
+            .toArray()
+          }
         </section>
 
         <Link to="/">
@@ -93,6 +111,28 @@ Profile.propTypes = {
       id: PropTypes.string,
     }),
   }),
+
+  user: PropTypes.shape({
+    /* id: PropTypes.number,
+    name: PropTypes.string,
+    website: PropTypes.string,
+    address: PropTypes.shape({
+      street: PropTypes.string,
+      suite: PropTypes.string,
+      city: PropTypes.string,
+      zipcode: PropTypes.string,
+      get: PropTypes.func,
+    }), */
+
+    size: PropTypes.number, // es una propiedad que tienen todos los objetos inmutables
+    get: PropTypes.func, // funcion para obtener datos de inmutables
+  }),
+  posts: PropTypes.shape({ // cambiamos arrayOf a objectOf
+    map: PropTypes.func,
+    size: PropTypes.number, // es una propiedad que tienen todos los objetos inmutables
+  }),
+
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
 }
 Profile.defaultProps = {
   match: {
@@ -100,6 +140,39 @@ Profile.defaultProps = {
       id: '1',
     },
   },
+
+  user: null,
+  posts: null,
 }
 
-export default Profile;
+// este state es de REDUX un state global
+function mapStateToProps(state, props) {
+  // console.log(mapStateToProps)
+  // console.log(
+  //   state
+  //     .get('posts')
+  //     .get('entities')
+  //     .filter(post => post.get('userId') === Number(props.match.params.id))
+  //     .toJS(),
+  // )
+  return {
+    // comments: state.comments.filter(comment => comment.postId === props.id),
+    // user: state.users[props.userId],
+    posts: state
+      .get('posts')
+      .get('entities')
+      .filter(post => post.get('userId') === Number(props.match.params.id)),
+    user: state
+      .get('users')
+      .get(Number(props.match.params.id)),
+  };
+}
+function mapDispatchToProps(dispatch, props) {
+  console.log(mapDispatchToProps)
+  console.log(props)
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
