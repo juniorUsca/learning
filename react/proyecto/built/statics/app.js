@@ -9498,6 +9498,13 @@ function setPosts(posts) {
   };
 }
 
+function setPost(post) {
+  return {
+    type: 'SET_POST',
+    payload: post
+  };
+}
+
 function setComments(comments) {
   return {
     type: 'SET_COMMENTS',
@@ -9572,6 +9579,20 @@ function loadUserPosts(userId) {
   })();
 }
 
+function loadPost(id) {
+  return (() => {
+    var _ref5 = _asyncToGenerator(function* (dispatch) {
+      const post = yield _api2.default.posts.getSingle(id);
+      dispatch(setPost(post));
+      return post;
+    });
+
+    return function (_x6) {
+      return _ref5.apply(this, arguments);
+    };
+  })();
+}
+
 exports.default = {
   setPosts,
   setComments,
@@ -9579,7 +9600,8 @@ exports.default = {
   postsNextPage,
   loadCommentsForPost,
   loadUser,
-  loadUserPosts
+  loadUserPosts,
+  loadPost
 };
 
 /***/ }),
@@ -39440,6 +39462,10 @@ var _propTypes = __webpack_require__(6);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _redux = __webpack_require__(25);
+
+var _reactRedux = __webpack_require__(42);
+
 var _Post = __webpack_require__(69);
 
 var _Post2 = _interopRequireDefault(_Post);
@@ -39452,22 +39478,24 @@ var _Loading = __webpack_require__(71);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _api = __webpack_require__(124);
+var _actions = __webpack_require__(70);
 
-var _api2 = _interopRequireDefault(_api);
+var _actions2 = _interopRequireDefault(_actions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+// import api from '../../api';
+
 class Post extends _react.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
-      post: {},
-      user: {},
-      comments: []
+      loading: true
+      // post: {},
+      // user: {},
+      // comments: [],
     };
   }
 
@@ -39479,15 +39507,28 @@ class Post extends _react.Component {
     var _this = this;
 
     return _asyncToGenerator(function* () {
-      const [post, comments] = yield Promise.all([_api2.default.posts.getSingle(_this.props.match.params.id), _api2.default.posts.getComments(_this.props.match.params.id)]);
+      // const [
+      //   post,
+      //   comments,
+      // ] = await Promise.all([
+      //   api.posts.getSingle(this.props.match.params.id),
+      //   api.posts.getComments(this.props.match.params.id),
+      // ]);
+      // const user = await api.users.getSingle(post.userId);
 
-      const user = yield _api2.default.users.getSingle(post.userId);
+      if (!!_this.props.post && !!_this.props.user) {
+        return _this.setState({
+          loading: false
+        });
+      }
+      yield Promise.all([_this.props.actions.loadPost(_this.props.match.params.id), _this.props.actions.loadCommentsForPost(_this.props.match.params.id)]);
+      yield _this.props.actions.loadUser(_this.props.post.get('userId'));
 
-      _this.setState({
-        loading: false,
-        post,
-        user,
-        comments
+      return _this.setState({
+        loading: false
+        // post,
+        // user,
+        // comments,
       });
     })();
   }
@@ -39500,13 +39541,13 @@ class Post extends _react.Component {
       'section',
       { name: 'post' },
       _react2.default.createElement(_Post2.default, _extends({
-        user: this.state.user,
-        comments: this.state.comments
-      }, this.state.post)),
+        user: this.props.user,
+        comments: this.props.comments
+      }, this.props.post.toJS())),
       _react2.default.createElement(
         'section',
         null,
-        this.state.comments.map(comment => _react2.default.createElement(_Comment2.default, _extends({ key: comment.id }, comment)))
+        this.props.comments.map(comment => _react2.default.createElement(_Comment2.default, _extends({ key: comment.get('id') }, comment.toJS()))).toArray()
       )
     );
   }
@@ -39517,7 +39558,18 @@ Post.propTypes = {
     params: _propTypes2.default.shape({
       id: _propTypes2.default.string
     })
-  })
+  }),
+
+  post: _propTypes2.default.shape({
+    get: _propTypes2.default.func, // de redux
+    toJS: _propTypes2.default.funx // de immutable
+  }),
+  user: _propTypes2.default.shape({}),
+  comments: _propTypes2.default.shape({ // objeto de objetos (array)
+    map: _propTypes2.default.funx // de immutable
+  }),
+
+  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired
 };
 
 Post.defaultProps = {
@@ -39525,10 +39577,29 @@ Post.defaultProps = {
     params: {
       id: '1'
     }
-  }
+  },
+
+  post: null,
+  user: null,
+  comments: null
 };
 
-exports.default = Post;
+function mapStateToProps(state, props) {
+  const res = {
+    comments: state.get('comments').filter(comment => comment.get('postId') === Number(props.match.params.id)),
+    post: state.get('posts').get('entities').get(Number(props.match.params.id))
+  };
+  res.user = state.get('users').get(res.post ? res.post.userId : 1);
+  return res;
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: (0, _redux.bindActionCreators)(_actions2.default, dispatch)
+  };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Post);
+// export default Post;
 
 /***/ }),
 /* 305 */
@@ -40064,6 +40135,8 @@ function postsEntitiesReducer(state = initialState.get('posts').get('entities'),
       return action.payload.reduce((posts, post) => posts.set(post.id, (0, _immutable.Map)(post)), // posts es el acumulador
       state // acumulador
       );
+    case 'SET_POST':
+      return state.set(action.payload.id, (0, _immutable.Map)(action.payload));
     default:
       return state;
   }
