@@ -1,0 +1,25 @@
+1b4cb02d38201d97c68ebc48c501ccd8
+'use strict';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _reactTestRenderer = require('react-test-renderer');var _reactTestRenderer2 = _interopRequireDefault(_reactTestRenderer);
+var _reactIntl = require('react-intl');
+
+var _Comment = require('./Comment');var _Comment2 = _interopRequireDefault(_Comment);
+var _messages = require('../../messages.json');var _messages2 = _interopRequireDefault(_messages);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const comment = {
+  id: 1,
+  email: 'cursos@platzi.com',
+  name: 'Platzi Team',
+  body: 'Este es un comentario de prueba' };
+
+
+test('Comment should render the component', () => {
+  const tree = _reactTestRenderer2.default.create(
+  _react2.default.createElement(_reactIntl.IntlProvider, { locale: 'es', messages: _messages2.default.es },
+    _react2.default.createElement(_Comment2.default, comment))).
+
+  toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkNvbW1lbnQudGVzdC5qc3giXSwibmFtZXMiOlsiY29tbWVudCIsImlkIiwiZW1haWwiLCJuYW1lIiwiYm9keSIsInRlc3QiLCJ0cmVlIiwiY3JlYXRlIiwiZXMiLCJ0b0pTT04iLCJleHBlY3QiLCJ0b01hdGNoU25hcHNob3QiXSwibWFwcGluZ3MiOiJhQUFBLDhCO0FBQ0Esd0Q7QUFDQTs7QUFFQSxvQztBQUNBLCtDOztBQUVBLE1BQU1BLFVBQVU7QUFDZEMsTUFBSSxDQURVO0FBRWRDLFNBQU8sbUJBRk87QUFHZEMsUUFBTSxhQUhRO0FBSWRDLFFBQU0saUNBSlEsRUFBaEI7OztBQU9BQyxLQUFLLHFDQUFMLEVBQTRDLE1BQU07QUFDaEQsUUFBTUMsT0FBTyw0QkFBU0MsTUFBVDtBQUNYLDJEQUFjLFFBQU8sSUFBckIsRUFBMEIsVUFBVSxtQkFBU0MsRUFBN0M7QUFDRSxxREFBYVIsT0FBYixDQURGLENBRFc7O0FBSVhTLFFBSlcsRUFBYjs7QUFNQUMsU0FBT0osSUFBUCxFQUFhSyxlQUFiO0FBQ0QsQ0FSRCIsImZpbGUiOiJDb21tZW50LnRlc3QuanN4Iiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCByZW5kZXJlciBmcm9tICdyZWFjdC10ZXN0LXJlbmRlcmVyJztcbmltcG9ydCB7IEludGxQcm92aWRlciB9IGZyb20gJ3JlYWN0LWludGwnO1xuXG5pbXBvcnQgQ29tbWVudCBmcm9tICcuL0NvbW1lbnQnO1xuaW1wb3J0IG1lc3NhZ2VzIGZyb20gJy4uLy4uL21lc3NhZ2VzLmpzb24nO1xuXG5jb25zdCBjb21tZW50ID0ge1xuICBpZDogMSxcbiAgZW1haWw6ICdjdXJzb3NAcGxhdHppLmNvbScsXG4gIG5hbWU6ICdQbGF0emkgVGVhbScsXG4gIGJvZHk6ICdFc3RlIGVzIHVuIGNvbWVudGFyaW8gZGUgcHJ1ZWJhJyxcbn07XG5cbnRlc3QoJ0NvbW1lbnQgc2hvdWxkIHJlbmRlciB0aGUgY29tcG9uZW50JywgKCkgPT4ge1xuICBjb25zdCB0cmVlID0gcmVuZGVyZXIuY3JlYXRlKFxuICAgIDxJbnRsUHJvdmlkZXIgbG9jYWxlPVwiZXNcIiBtZXNzYWdlcz17bWVzc2FnZXMuZXN9PlxuICAgICAgPENvbW1lbnQgey4uLmNvbW1lbnR9IC8+XG4gICAgPC9JbnRsUHJvdmlkZXI+LFxuICApLnRvSlNPTigpO1xuXG4gIGV4cGVjdCh0cmVlKS50b01hdGNoU25hcHNob3QoKTtcbn0pOyJdfQ==

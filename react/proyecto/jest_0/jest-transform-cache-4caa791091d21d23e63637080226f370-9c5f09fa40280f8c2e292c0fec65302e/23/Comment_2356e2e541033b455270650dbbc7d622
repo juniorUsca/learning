@@ -1,0 +1,37 @@
+252d71ece1c0cb9ba68e34d65e49fdc5
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var cov_16k0w93u99 = function () {var path = '/data/source/comments/components/Comment.jsx',hash = 'e1a5bb102f8876769927d5339d1bb08b736a1f4e',global = new Function('return this')(),gcv = '__coverage__',coverageData = { path: '/data/source/comments/components/Comment.jsx', statementMap: { '0': { start: { line: 8, column: 2 }, end: { line: 22, column: 4 } }, '1': { start: { line: 25, column: 0 }, end: { line: 30, column: 1 } }, '2': { start: { line: 32, column: 0 }, end: { line: 33, column: 1 } } }, fnMap: { '0': { name: 'Comment', decl: { start: { line: 7, column: 9 }, end: { line: 7, column: 16 } }, loc: { start: { line: 7, column: 24 }, end: { line: 23, column: 1 } }, line: 7 } }, branchMap: {}, s: { '0': 0, '1': 0, '2': 0 }, f: { '0': 0 }, b: {}, _coverageSchema: '332fd63041d2c1bcb487cc26dd0d5f7d97098a6c' },coverage = global[gcv] || (global[gcv] = {});if (coverage[path] && coverage[path].hash === hash) {return coverage[path];}coverageData.hash = hash;return coverage[path] = coverageData;}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+var /* istanbul ignore next */_reactIntl = require('react-intl'); /* istanbul ignore next */function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+// es una funcion pura xq no se hace peticiones ni nada
+
+function Comment(props) {/* istanbul ignore next */cov_16k0w93u99.f[0]++;cov_16k0w93u99.s[0]++;
+  return (
+    /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'article', /* istanbul ignore next */{ id: `comment-${props.id}` },
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */null,
+
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_reactIntl.FormattedHTMLMessage, /* istanbul ignore next */{
+          id: 'comment.meta.author',
+          values: {
+            email: props.email,
+            name: props.name } })),
+
+
+
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'p', /* istanbul ignore next */null, props.body)));
+
+
+} /* istanbul ignore next */cov_16k0w93u99.s[1]++;
+
+Comment.propTypes = {
+  id: /* istanbul ignore next */_propTypes2.default.number.isRequired,
+  email: /* istanbul ignore next */_propTypes2.default.string.isRequired,
+  name: /* istanbul ignore next */_propTypes2.default.string.isRequired,
+  body: /* istanbul ignore next */_propTypes2.default.string.isRequired }; /* istanbul ignore next */cov_16k0w93u99.s[2]++;
+
+
+Comment.defaultProps = {}; /* istanbul ignore next */exports.default =
+
+
+Comment;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkNvbW1lbnQuanN4Il0sIm5hbWVzIjpbIkNvbW1lbnQiLCJwcm9wcyIsImlkIiwiZW1haWwiLCJuYW1lIiwiYm9keSIsInByb3BUeXBlcyIsIm51bWJlciIsImlzUmVxdWlyZWQiLCJzdHJpbmciLCJkZWZhdWx0UHJvcHMiXSwibWFwcGluZ3MiOiJxbENBQUEsd0Q7QUFDQSxpRTtBQUNBLGlFOztBQUVBOztBQUVBLFNBQVNBLE9BQVQsQ0FBaUJDLEtBQWpCLEVBQXdCO0FBQ3RCO0FBQ0UsOEhBQVMsSUFBSyxXQUFVQSxNQUFNQyxFQUFHLEVBQWpDO0FBQ0U7O0FBRUU7QUFDRSxjQUFHLHFCQURMO0FBRUUsa0JBQVE7QUFDTkMsbUJBQU9GLE1BQU1FLEtBRFA7QUFFTkMsa0JBQU1ILE1BQU1HLElBRk4sRUFGVixHQUZGLENBREY7Ozs7QUFXRSw4SEFBSUgsTUFBTUksSUFBVixDQVhGLENBREY7OztBQWVELEM7O0FBRURMLFFBQVFNLFNBQVIsR0FBb0I7QUFDbEJKLE1BQUksOENBQVVLLE1BQVYsQ0FBaUJDLFVBREg7QUFFbEJMLFNBQU8sOENBQVVNLE1BQVYsQ0FBaUJELFVBRk47QUFHbEJKLFFBQU0sOENBQVVLLE1BQVYsQ0FBaUJELFVBSEw7QUFJbEJILFFBQU0sOENBQVVJLE1BQVYsQ0FBaUJELFVBSkwsRUFBcEIsQzs7O0FBT0FSLFFBQVFVLFlBQVIsR0FBdUIsRUFBdkIsQzs7O0FBR2VWLE8iLCJmaWxlIjoiQ29tbWVudC5qc3giLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IFByb3BUeXBlcyBmcm9tICdwcm9wLXR5cGVzJztcbmltcG9ydCB7IEZvcm1hdHRlZEhUTUxNZXNzYWdlIH0gZnJvbSAncmVhY3QtaW50bCdcblxuLy8gZXMgdW5hIGZ1bmNpb24gcHVyYSB4cSBubyBzZSBoYWNlIHBldGljaW9uZXMgbmkgbmFkYVxuXG5mdW5jdGlvbiBDb21tZW50KHByb3BzKSB7XG4gIHJldHVybiAoXG4gICAgPGFydGljbGUgaWQ9e2Bjb21tZW50LSR7cHJvcHMuaWR9YH0+XG4gICAgICA8ZGl2PlxuICAgICAgICB7LyogQnk6IDxhIGhyZWY9e2BtYWlsdG86ICR7cHJvcHMuZW1haWx9YH0+e3Byb3BzLm5hbWV9PC9hPiAqL31cbiAgICAgICAgPEZvcm1hdHRlZEhUTUxNZXNzYWdlXG4gICAgICAgICAgaWQ9XCJjb21tZW50Lm1ldGEuYXV0aG9yXCJcbiAgICAgICAgICB2YWx1ZXM9e3tcbiAgICAgICAgICAgIGVtYWlsOiBwcm9wcy5lbWFpbCxcbiAgICAgICAgICAgIG5hbWU6IHByb3BzLm5hbWUsXG4gICAgICAgICAgfX1cbiAgICAgICAgLz5cbiAgICAgIDwvZGl2PlxuICAgICAgPHA+e3Byb3BzLmJvZHl9PC9wPlxuICAgIDwvYXJ0aWNsZT5cbiAgKTtcbn1cblxuQ29tbWVudC5wcm9wVHlwZXMgPSB7XG4gIGlkOiBQcm9wVHlwZXMubnVtYmVyLmlzUmVxdWlyZWQsXG4gIGVtYWlsOiBQcm9wVHlwZXMuc3RyaW5nLmlzUmVxdWlyZWQsXG4gIG5hbWU6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZCxcbiAgYm9keTogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxufVxuXG5Db21tZW50LmRlZmF1bHRQcm9wcyA9IHtcbn1cblxuZXhwb3J0IGRlZmF1bHQgQ29tbWVudDtcbiJdfQ==
