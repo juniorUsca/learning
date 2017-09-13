@@ -9,7 +9,7 @@
     "statics": "serve ./built/statics/ --port 3001 --cache 0",
     "node": "node ./built/server/index.js",
     "start": "npm run node",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "juniorUsca <junior.usca@gmail.com>",
   "license": "GPL-3.0",
@@ -32,6 +32,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
+    "babel-jest": "^21.0.2",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
@@ -49,6 +50,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.3.0",
     "extract-text-webpack-plugin": "^3.0.0",
+    "jest": "^21.0.2",
     "json-loader": "^0.5.7",
     "nib": "^1.1.2",
     "serve": "^6.0.6",
