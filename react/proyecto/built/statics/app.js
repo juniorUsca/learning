@@ -38621,7 +38621,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
 /* 296 */
 /***/ (function(module, exports) {
 
-module.exports = {"en":{"error.404":"Go back to home","title":"My blog in react","title.home":"Home","title.profile":"Profile of {name}","profile.field.basic":"Basic info","profile.field.address":"Address","header.nav.home":"Home","comment.meta.author":"By: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comments","post.meta.readMore":"Read more...","loading":"Loading data..."},"es":{"error.404":"Volver al inicio","title":"Mi blog en react","title.home":"Inicio","title.profile":"Perfil de {name}","profile.field.basic":"Información básica","profile.field.address":"Dirección","header.nav.home":"Inicio","comment.meta.author":"Por: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comentarios","post.meta.readMore":"Leer más...","loading":"Cargando datos..."}}
+module.exports = {"en":{"error.404":"Go back to home","title":"My blog in react","title.home":"Homeee","title.profile":"Profile of {name}","profile.field.basic":"Basic info","profile.field.address":"Address","profile.title":"Profile","header.nav.home":"Home","comment.meta.author":"By: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comments","post.meta.readMore":"Read more...","loading":"Loading data..."},"es":{"error.404":"Volver al inicio","title":"Mi blog en react","title.home":"Inicio","title.profile":"Perfil de {name}","profile.field.basic":"Información básica","profile.field.address":"Dirección","profile.title":"Perfil","header.nav.home":"Inicio","comment.meta.author":"Por: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comentarios","post.meta.readMore":"Leer más...","loading":"Cargando datos..."}}
 
 /***/ }),
 /* 297 */
@@ -38757,9 +38757,14 @@ class Home extends _react.Component {
     };
 
     this.handleScroll = this.handleScroll.bind(this);
+    console.log('constructor del home');
   }
 
   componentDidMount() {
+    console.log('componentDidMount');
+    console.log(this.props);
+
+    this.setTitle();
     this.initialFetch();
 
     window.addEventListener('scroll', this.handleScroll);
@@ -38767,6 +38772,12 @@ class Home extends _react.Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  setTitle() {
+    document.title = this.props.intl.formatMessage({
+      id: 'title.home'
+    }, {});
   }
 
   initialFetch() {
@@ -38778,6 +38789,7 @@ class Home extends _react.Component {
       //   actions.setPosts(posts),
       // )
       yield _this.props.actions.postsNextPage();
+      console.log('getted');
       // console.log('posts getted', posts);
       _this.setState({
         loading: false
@@ -38788,6 +38800,7 @@ class Home extends _react.Component {
   handleScroll() {
     var _this2 = this;
 
+    console.log('scroll');
     if (this.state.loading) return null;
 
     const scrolled = window.scrollY;
@@ -38822,7 +38835,6 @@ class Home extends _react.Component {
   }
 
   render() {
-    // console.log(this.props)
     return _react2.default.createElement(
       'section',
       { name: 'Home', className: _Page4.default.section },
@@ -38861,7 +38873,9 @@ Home.propTypes = {
     map: _propTypes2.default.func,
     size: _propTypes2.default.number
   }).isRequired,
-  page: _propTypes2.default.number.isRequired
+  page: _propTypes2.default.number.isRequired,
+
+  intl: _reactIntl.intlShape.isRequired
 };
 
 Home.defaultProps = {};
@@ -38881,7 +38895,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
+exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home));
 
 /***/ }),
 /* 299 */
@@ -39466,6 +39480,8 @@ var _redux = __webpack_require__(21);
 
 var _reactRedux = __webpack_require__(32);
 
+var _reactIntl = __webpack_require__(17);
+
 var _Post = __webpack_require__(70);
 
 var _Post2 = _interopRequireDefault(_Post);
@@ -39500,13 +39516,23 @@ class Post extends _react.Component {
   }
 
   componentDidMount() {
+    this.setTitle();
     this.initialFetch();
+  }
+
+  setTitle() {
+    if (this.props.post) document.title = this.props.post.get('title');else {
+      document.title = this.props.intl.formatMessage({
+        id: 'title'
+      }, {});
+    }
   }
 
   initialFetch() {
     var _this = this;
 
     return _asyncToGenerator(function* () {
+      console.log('initialFetch');
       // const [
       //   post,
       //   comments,
@@ -39517,11 +39543,13 @@ class Post extends _react.Component {
       // const user = await api.users.getSingle(post.userId);
 
       if (!!_this.props.post && !!_this.props.user) {
+        _this.setTitle();
         return _this.setState({
           loading: false
         });
       }
       yield Promise.all([_this.props.actions.loadPost(_this.props.match.params.id), _this.props.actions.loadCommentsForPost(_this.props.match.params.id)]);
+      _this.setTitle();
       yield _this.props.actions.loadUser(_this.props.post.get('userId'));
 
       return _this.setState({
@@ -39569,7 +39597,9 @@ Post.propTypes = {
     map: _propTypes2.default.funx // de immutable
   }),
 
-  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired
+  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired,
+
+  intl: _reactIntl.intlShape.isRequired
 };
 
 Post.defaultProps = {
@@ -39598,7 +39628,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Post);
+exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Post));
 // export default Post;
 
 /***/ }),
@@ -39719,7 +39749,16 @@ class Profile extends _react.Component {
   }
 
   componentDidMount() {
+    this.setTitle();
     this.initialFetch();
+  }
+
+  setTitle() {
+    if (this.props.user) document.title = this.props.user.get('name');else {
+      document.title = this.props.intl.formatMessage({
+        id: 'profile.title'
+      }, {});
+    }
   }
 
   initialFetch() {
@@ -39732,12 +39771,14 @@ class Profile extends _react.Component {
       // ]);
       // console.log(user);
       console.log(_this.props);
-      /* if (!!this.props.user && !!this.props.posts) {
-        console.log('existe')
-        return this.setState({ loading: false })
-      } */
-      console.log('cargand');
+      if (_this.props.user) {
+        console.log('existe usuario');
+        _this.setTitle();
+        return _this.setState({ loading: false });
+      }
+      console.log('cargand usuario y sus posts');
       yield Promise.all([_this.props.actions.loadUser(_this.props.match.params.id), _this.props.actions.loadUserPosts(_this.props.match.params.id)]);
+      _this.setTitle();
 
       return _this.setState({
         loading: false
@@ -39838,7 +39879,9 @@ Profile.propTypes = {
     size: _propTypes2.default.number // es una propiedad que tienen todos los objetos inmutables
   }),
 
-  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired
+  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired,
+
+  intl: _reactIntl.intlShape.isRequired
 };
 Profile.defaultProps = {
   match: {
@@ -39868,14 +39911,14 @@ Profile.defaultProps = {
   };
 }
 function mapDispatchToProps(dispatch, props) {
-  console.log(mapDispatchToProps);
+  console.log('mapDispatchToProps');
   console.log(props);
   return {
     actions: (0, _redux.bindActionCreators)(_actions2.default, dispatch)
   };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Profile);
+exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Profile));
 
 /***/ }),
 /* 307 */

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { injectIntl, intlShape } from 'react-intl'
 
 import PostBody from '../../posts/containers/Post';
 import Comment from '../../comments/components/Comment';
@@ -22,10 +23,21 @@ class Post extends Component {
   }
 
   componentDidMount() {
+    this.setTitle()
     this.initialFetch()
   }
 
+  setTitle() {
+    if (this.props.post) document.title = this.props.post.get('title')
+    else {
+      document.title = this.props.intl.formatMessage({
+        id: 'title',
+      }, {});
+    }
+  }
+
   async initialFetch() {
+    console.log('initialFetch')
     // const [
     //   post,
     //   comments,
@@ -36,6 +48,7 @@ class Post extends Component {
     // const user = await api.users.getSingle(post.userId);
 
     if (!!this.props.post && !!this.props.user) {
+      this.setTitle()
       return this.setState({
         loading: false,
       })
@@ -44,6 +57,7 @@ class Post extends Component {
       this.props.actions.loadPost(this.props.match.params.id),
       this.props.actions.loadCommentsForPost(this.props.match.params.id),
     ]);
+    this.setTitle()
     await this.props.actions.loadUser(
       this.props.post.get('userId'),
     )
@@ -100,6 +114,8 @@ Post.propTypes = {
   }),
 
   actions: PropTypes.objectOf(PropTypes.func).isRequired,
+
+  intl: intlShape.isRequired,
 }
 
 Post.defaultProps = {
@@ -135,5 +151,5 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Post));
 // export default Post;

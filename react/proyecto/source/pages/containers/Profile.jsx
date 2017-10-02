@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -22,7 +22,17 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+    this.setTitle()
     this.initialFetch()
+  }
+
+  setTitle() {
+    if (this.props.user) document.title = this.props.user.get('name')
+    else {
+      document.title = this.props.intl.formatMessage({
+        id: 'profile.title',
+      }, {});
+    }
   }
 
   async initialFetch() {
@@ -32,15 +42,17 @@ class Profile extends Component {
     // ]);
     // console.log(user);
     console.log(this.props)
-    /* if (!!this.props.user && !!this.props.posts) {
-      console.log('existe')
+    if (this.props.user) {
+      console.log('existe usuario')
+      this.setTitle()
       return this.setState({ loading: false })
-    } */
-    console.log('cargand')
+    }
+    console.log('cargand usuario y sus posts')
     await Promise.all([
       this.props.actions.loadUser(this.props.match.params.id),
       this.props.actions.loadUserPosts(this.props.match.params.id),
     ]);
+    this.setTitle()
 
     return this.setState({
       loading: false,
@@ -133,6 +145,8 @@ Profile.propTypes = {
   }),
 
   actions: PropTypes.objectOf(PropTypes.func).isRequired,
+
+  intl: intlShape.isRequired,
 }
 Profile.defaultProps = {
   match: {
@@ -168,11 +182,11 @@ function mapStateToProps(state, props) {
   };
 }
 function mapDispatchToProps(dispatch, props) {
-  console.log(mapDispatchToProps)
+  console.log('mapDispatchToProps')
   console.log(props)
   return {
     actions: bindActionCreators(actions, dispatch),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Profile));

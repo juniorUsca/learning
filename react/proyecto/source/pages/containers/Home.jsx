@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -22,9 +22,14 @@ class Home extends Component {
     };
 
     this.handleScroll = this.handleScroll.bind(this);
+    console.log('constructor del home')
   }
 
   componentDidMount() {
+    console.log('componentDidMount')
+    console.log(this.props)
+
+    this.setTitle()
     this.initialFetch()
 
     window.addEventListener('scroll', this.handleScroll);
@@ -34,12 +39,19 @@ class Home extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  setTitle() {
+    document.title = this.props.intl.formatMessage({
+      id: 'title.home',
+    }, {});
+  }
+
   async initialFetch() {
     // const posts = await api.posts.getList(this.props.page);
     // this.props.dispatch(
     //   actions.setPosts(posts),
     // )
     await this.props.actions.postsNextPage()
+    console.log('getted')
     // console.log('posts getted', posts);
     this.setState({
       loading: false,
@@ -47,6 +59,7 @@ class Home extends Component {
   }
 
   handleScroll() {
+    console.log('scroll')
     if (this.state.loading) return null;
 
     const scrolled = window.scrollY;
@@ -81,7 +94,6 @@ class Home extends Component {
   }
 
   render() {
-    // console.log(this.props)
     return (
       <section name="Home" className={styl.section}>
         <FormattedMessage
@@ -123,6 +135,8 @@ Home.propTypes = {
     size: PropTypes.number,
   }).isRequired,
   page: PropTypes.number.isRequired,
+
+  intl: intlShape.isRequired,
 }
 
 Home.defaultProps = {
@@ -145,4 +159,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Home));

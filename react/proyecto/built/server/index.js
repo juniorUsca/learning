@@ -584,7 +584,7 @@ module.exports = { debugTool: debugTool };
 
 var _prodInvariant = __webpack_require__(17);
 
-var ReactCurrentOwner = __webpack_require__(12);
+var ReactCurrentOwner = __webpack_require__(13);
 
 var invariant = __webpack_require__(0);
 var warning = __webpack_require__(1);
@@ -1477,6 +1477,12 @@ module.exports = ReactUpdates;
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-intl");
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1508,12 +1514,6 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-intl");
 
 /***/ }),
 /* 14 */
@@ -1651,7 +1651,7 @@ module.exports = PooledClass;
 
 var _assign = __webpack_require__(3);
 
-var ReactCurrentOwner = __webpack_require__(12);
+var ReactCurrentOwner = __webpack_require__(13);
 
 var warning = __webpack_require__(1);
 var canDefineProperty = __webpack_require__(31);
@@ -6149,7 +6149,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRouterDom = __webpack_require__(16);
 
-var _reactIntl = __webpack_require__(13);
+var _reactIntl = __webpack_require__(12);
 
 var _redux = __webpack_require__(27);
 
@@ -6319,7 +6319,7 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactIntl = __webpack_require__(13);
+var _reactIntl = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7733,7 +7733,7 @@ module.exports = getIteratorFn;
 
 
 
-var ReactCurrentOwner = __webpack_require__(12);
+var ReactCurrentOwner = __webpack_require__(13);
 var ReactComponentTreeHook = __webpack_require__(9);
 var ReactElement = __webpack_require__(15);
 
@@ -8482,7 +8482,7 @@ module.exports = ReactHostComponent;
 
 var _prodInvariant = __webpack_require__(2);
 
-var ReactCurrentOwner = __webpack_require__(12);
+var ReactCurrentOwner = __webpack_require__(13);
 var REACT_ELEMENT_TYPE = __webpack_require__(152);
 
 var getIteratorFn = __webpack_require__(153);
@@ -8758,7 +8758,7 @@ module.exports = ReactServerRenderingTransaction;
 
 var _prodInvariant = __webpack_require__(2);
 
-var ReactCurrentOwner = __webpack_require__(12);
+var ReactCurrentOwner = __webpack_require__(13);
 var ReactInstanceMap = __webpack_require__(48);
 var ReactInstrumentation = __webpack_require__(8);
 var ReactUpdates = __webpack_require__(11);
@@ -9324,7 +9324,7 @@ var _server = __webpack_require__(89);
 
 var _reactRouterDom = __webpack_require__(16);
 
-var _reactIntl = __webpack_require__(13);
+var _reactIntl = __webpack_require__(12);
 
 var _reactRedux = __webpack_require__(26);
 
@@ -9347,6 +9347,13 @@ var _store2 = _interopRequireDefault(_store);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const staticsDomain =  false ? 'https://junior-react-statics.now.sh' : 'http://localhost:3001';
+
+function titleHandler(url) {
+  if (url === '/') return 'title.home';
+  if (/^\/post\/[0-9]+$/.test(url)) return 'title';
+  if (/^\/user\/[0-9]+$/.test(url)) return 'profile.title';
+  return 'error.404';
+}
 
 function requestHandler(req, res) {
   // vemos en q lenguage esta el navegador
@@ -9376,12 +9383,17 @@ function requestHandler(req, res) {
     res.end();
   }
 
+  // console.log('desde el server\n', html);
   // res.write( html );
-  res.write((0, _server.renderToStaticMarkup)(_react2.default.createElement(_Layout2.default, {
-    title: 'Aplicaci\xF3n',
-    content: html,
-    domain: staticsDomain
-  })));
+  res.write((0, _server.renderToStaticMarkup)(_react2.default.createElement(
+    _reactIntl.IntlProvider,
+    { locale: locale, messages: _messages2.default[locale] },
+    _react2.default.createElement(_Layout2.default, {
+      titleId: titleHandler(req.url),
+      content: html,
+      domain: staticsDomain
+    })
+  )));
   res.end();
 }
 
@@ -14978,7 +14990,7 @@ module.exports = PooledClass;
 
 var _prodInvariant = __webpack_require__(17);
 
-var ReactCurrentOwner = __webpack_require__(12);
+var ReactCurrentOwner = __webpack_require__(13);
 var REACT_ELEMENT_TYPE = __webpack_require__(72);
 
 var getIteratorFn = __webpack_require__(73);
@@ -16830,7 +16842,7 @@ var ReactComponentEnvironment = __webpack_require__(47);
 var ReactInstanceMap = __webpack_require__(48);
 var ReactInstrumentation = __webpack_require__(8);
 
-var ReactCurrentOwner = __webpack_require__(12);
+var ReactCurrentOwner = __webpack_require__(13);
 var ReactReconciler = __webpack_require__(22);
 var ReactChildReconciler = __webpack_require__(146);
 
@@ -17438,7 +17450,7 @@ var _prodInvariant = __webpack_require__(2),
 
 var React = __webpack_require__(25);
 var ReactComponentEnvironment = __webpack_require__(47);
-var ReactCurrentOwner = __webpack_require__(12);
+var ReactCurrentOwner = __webpack_require__(13);
 var ReactErrorUtils = __webpack_require__(36);
 var ReactInstanceMap = __webpack_require__(48);
 var ReactInstrumentation = __webpack_require__(8);
@@ -21643,7 +21655,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRouterDom = __webpack_require__(16);
 
-var _reactIntl = __webpack_require__(13);
+var _reactIntl = __webpack_require__(12);
 
 var _reactRedux = __webpack_require__(26);
 
@@ -21683,9 +21695,14 @@ class Home extends _react.Component {
     };
 
     this.handleScroll = this.handleScroll.bind(this);
+    console.log('constructor del home');
   }
 
   componentDidMount() {
+    console.log('componentDidMount');
+    console.log(this.props);
+
+    this.setTitle();
     this.initialFetch();
 
     window.addEventListener('scroll', this.handleScroll);
@@ -21693,6 +21710,12 @@ class Home extends _react.Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  setTitle() {
+    document.title = this.props.intl.formatMessage({
+      id: 'title.home'
+    }, {});
   }
 
   initialFetch() {
@@ -21704,6 +21727,7 @@ class Home extends _react.Component {
       //   actions.setPosts(posts),
       // )
       yield _this.props.actions.postsNextPage();
+      console.log('getted');
       // console.log('posts getted', posts);
       _this.setState({
         loading: false
@@ -21714,6 +21738,7 @@ class Home extends _react.Component {
   handleScroll() {
     var _this2 = this;
 
+    console.log('scroll');
     if (this.state.loading) return null;
 
     const scrolled = window.scrollY;
@@ -21748,7 +21773,6 @@ class Home extends _react.Component {
   }
 
   render() {
-    // console.log(this.props)
     return _react2.default.createElement(
       'section',
       { name: 'Home', className: _Page4.default.section },
@@ -21787,7 +21811,9 @@ Home.propTypes = {
     map: _propTypes2.default.func,
     size: _propTypes2.default.number
   }).isRequired,
-  page: _propTypes2.default.number.isRequired
+  page: _propTypes2.default.number.isRequired,
+
+  intl: _reactIntl.intlShape.isRequired
 };
 
 Home.defaultProps = {};
@@ -21807,7 +21833,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
+exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home));
 
 /***/ }),
 /* 188 */
@@ -21919,6 +21945,8 @@ var _redux = __webpack_require__(27);
 
 var _reactRedux = __webpack_require__(26);
 
+var _reactIntl = __webpack_require__(12);
+
 var _Post = __webpack_require__(53);
 
 var _Post2 = _interopRequireDefault(_Post);
@@ -21953,13 +21981,23 @@ class Post extends _react.Component {
   }
 
   componentDidMount() {
+    this.setTitle();
     this.initialFetch();
+  }
+
+  setTitle() {
+    if (this.props.post) document.title = this.props.post.get('title');else {
+      document.title = this.props.intl.formatMessage({
+        id: 'title'
+      }, {});
+    }
   }
 
   initialFetch() {
     var _this = this;
 
     return _asyncToGenerator(function* () {
+      console.log('initialFetch');
       // const [
       //   post,
       //   comments,
@@ -21970,11 +22008,13 @@ class Post extends _react.Component {
       // const user = await api.users.getSingle(post.userId);
 
       if (!!_this.props.post && !!_this.props.user) {
+        _this.setTitle();
         return _this.setState({
           loading: false
         });
       }
       yield Promise.all([_this.props.actions.loadPost(_this.props.match.params.id), _this.props.actions.loadCommentsForPost(_this.props.match.params.id)]);
+      _this.setTitle();
       yield _this.props.actions.loadUser(_this.props.post.get('userId'));
 
       return _this.setState({
@@ -22022,7 +22062,9 @@ Post.propTypes = {
     map: _propTypes2.default.funx // de immutable
   }),
 
-  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired
+  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired,
+
+  intl: _reactIntl.intlShape.isRequired
 };
 
 Post.defaultProps = {
@@ -22051,7 +22093,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Post);
+exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Post));
 // export default Post;
 
 /***/ }),
@@ -22073,7 +22115,7 @@ var _propTypes = __webpack_require__(18);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactIntl = __webpack_require__(13);
+var _reactIntl = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22136,7 +22178,7 @@ var _propTypes = __webpack_require__(18);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactIntl = __webpack_require__(13);
+var _reactIntl = __webpack_require__(12);
 
 var _redux = __webpack_require__(27);
 
@@ -22172,7 +22214,16 @@ class Profile extends _react.Component {
   }
 
   componentDidMount() {
+    this.setTitle();
     this.initialFetch();
+  }
+
+  setTitle() {
+    if (this.props.user) document.title = this.props.user.get('name');else {
+      document.title = this.props.intl.formatMessage({
+        id: 'profile.title'
+      }, {});
+    }
   }
 
   initialFetch() {
@@ -22185,12 +22236,14 @@ class Profile extends _react.Component {
       // ]);
       // console.log(user);
       console.log(_this.props);
-      /* if (!!this.props.user && !!this.props.posts) {
-        console.log('existe')
-        return this.setState({ loading: false })
-      } */
-      console.log('cargand');
+      if (_this.props.user) {
+        console.log('existe usuario');
+        _this.setTitle();
+        return _this.setState({ loading: false });
+      }
+      console.log('cargand usuario y sus posts');
       yield Promise.all([_this.props.actions.loadUser(_this.props.match.params.id), _this.props.actions.loadUserPosts(_this.props.match.params.id)]);
+      _this.setTitle();
 
       return _this.setState({
         loading: false
@@ -22291,7 +22344,9 @@ Profile.propTypes = {
     size: _propTypes2.default.number // es una propiedad que tienen todos los objetos inmutables
   }),
 
-  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired
+  actions: _propTypes2.default.objectOf(_propTypes2.default.func).isRequired,
+
+  intl: _reactIntl.intlShape.isRequired
 };
 Profile.defaultProps = {
   match: {
@@ -22321,14 +22376,14 @@ Profile.defaultProps = {
   };
 }
 function mapDispatchToProps(dispatch, props) {
-  console.log(mapDispatchToProps);
+  console.log('mapDispatchToProps');
   console.log(props);
   return {
     actions: (0, _redux.bindActionCreators)(_actions2.default, dispatch)
   };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Profile);
+exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Profile));
 
 /***/ }),
 /* 195 */
@@ -22347,7 +22402,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(16);
 
-var _reactIntl = __webpack_require__(13);
+var _reactIntl = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22389,7 +22444,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(16);
 
-var _reactIntl = __webpack_require__(13);
+var _reactIntl = __webpack_require__(12);
 
 var _Header = __webpack_require__(197);
 
@@ -22446,6 +22501,8 @@ var _propTypes = __webpack_require__(18);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _reactIntl = __webpack_require__(12);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Layout(props) {
@@ -22456,17 +22513,21 @@ function Layout(props) {
       'head',
       null,
       _react2.default.createElement('meta', { charSet: 'utf-8' }),
-      _react2.default.createElement(
-        'title',
-        null,
-        props.title
-      ),
+      _react2.default.createElement(_reactIntl.FormattedMessage, {
+        id: props.titleId,
+        tagName: 'title',
+        defaultMessage: 'asd'
+      }),
       _react2.default.createElement('link', { rel: 'stylesheet', href: `${props.domain}/main.css` }),
       _react2.default.createElement('link', { rel: 'stylesheet', href: `${props.domain}/styles.css` })
     ),
     _react2.default.createElement(
       'body',
       null,
+      _react2.default.createElement(_reactIntl.FormattedMessage, {
+        id: 'title.home',
+        tagName: 'h1'
+      }),
       _react2.default.createElement('div', {
         id: 'render-target',
         dangerouslySetInnerHTML: {
@@ -22479,7 +22540,7 @@ function Layout(props) {
 }
 
 Layout.propTypes = {
-  title: _propTypes2.default.string.isRequired,
+  titleId: _propTypes2.default.string.isRequired,
   content: _propTypes2.default.string.isRequired,
   domain: _propTypes2.default.string.isRequired
 };
@@ -22492,7 +22553,7 @@ exports.default = Layout;
 /* 199 */
 /***/ (function(module, exports) {
 
-module.exports = {"en":{"error.404":"Go back to home","title":"My blog in react","title.home":"Home","title.profile":"Profile of {name}","profile.field.basic":"Basic info","profile.field.address":"Address","header.nav.home":"Home","comment.meta.author":"By: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comments","post.meta.readMore":"Read more...","loading":"Loading data..."},"es":{"error.404":"Volver al inicio","title":"Mi blog en react","title.home":"Inicio","title.profile":"Perfil de {name}","profile.field.basic":"Información básica","profile.field.address":"Dirección","header.nav.home":"Inicio","comment.meta.author":"Por: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comentarios","post.meta.readMore":"Leer más...","loading":"Cargando datos..."}}
+module.exports = {"en":{"error.404":"Go back to home","title":"My blog in react","title.home":"Homeee","title.profile":"Profile of {name}","profile.field.basic":"Basic info","profile.field.address":"Address","profile.title":"Profile","header.nav.home":"Home","comment.meta.author":"By: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comments","post.meta.readMore":"Read more...","loading":"Loading data..."},"es":{"error.404":"Volver al inicio","title":"Mi blog en react","title.home":"Inicio","title.profile":"Perfil de {name}","profile.field.basic":"Información básica","profile.field.address":"Dirección","profile.title":"Perfil","header.nav.home":"Inicio","comment.meta.author":"Por: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comentarios","post.meta.readMore":"Leer más...","loading":"Cargando datos..."}}
 
 /***/ }),
 /* 200 */
