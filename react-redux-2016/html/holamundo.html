@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<main id="app"></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
+<script type="text/babel">
+
+    // este es un HOC (componente de alto orden)
+    function Counter(WrappedComponent) {
+        class CounterHOC extends React.Component {
+            constructor(props) {
+                super( props );
+
+                this.state = {
+                    count: 0,
+                }
+                this.handleClick = this.handleClick.bind(this);
+            }
+            getChildContext() {
+                return {
+                    count: this.state.count,
+                };
+            }
+            handleClick() {
+                this.setState({
+                    count: this.state.count + 1,
+                });
+            }
+            render() {
+                // los ... 3 puntos son una forma de decir a los datos desconponganse y apliquense a este componente
+                // una forma manual de hacerlo seria de esta forma, pero como no sabemos los nombres
+                // usamos los 3puntos
+                // <WrappedComponent onClick={props.onClick} onMouseEnter={props.onMouseEnter} >
+                return(
+                    <WrappedComponent
+                        onClick={this.handleClick}
+                        {...this.props}
+                    />
+                )
+            }
+        }
+        
+        CounterHOC.childContextTypes = {
+            count: React.PropTypes.number,
+        }
+
+        return CounterHOC;
+    }
+    
+
+    // componente:
+    // Funcion Pura
+    function Hola (props, context) {
+        return (
+            <h1 id="Title" onClick={props.onClick}>
+                Hola {props.name} {context.count}
+            </h1>
+        );
+    }
+
+    // accedemos al contexto desde Hola
+    Hola.contextTypes = {
+        count: React.PropTypes.number,
+    }
+
+    const HolaHOC = Counter(Hola);
+
+
+
+    // componente:
+    // Clase: Acceso a mas funcionalidades de react como el estado
+    //
+    // PureComponent: valida si los props y el estado cambiaron
+    // mejor rendimiento, recomendable usar solo en componentes que no tengan estado
+    // para no tener problemas de ambito(entorno)
+    class MiComponente extends React.Component{
+        constructor(props) {
+            super( props );
+
+            this.state = {
+                count: 0,
+            };
+            
+            // bind por el entorno en onClick
+            this.handleClick = this.handleClick.bind(this);
+            //this.handleMouseEnter = this.handleClick.bind(this);
+        }
+
+        componentWillMount() {
+            console.log( "el componente se va a montar" )
+        }
+
+        // se puede trabajar con el DOM
+        componentDidMount() {
+            console.log( "el componente se a montado" )
+            document.addEventListener( 'click', this.handleClick )
+        }
+
+        // actualizamos estados si los props cambian
+        componentWillReceiveProps(nextProps){
+            console.log("actualizando estado")
+            console.log(nextProps)
+            this.setState({
+                count: (this.state.count+1)*2,
+            })
+        }
+
+        // valida si el componente se tiene que actualizar o no
+        shouldComponentUpdate(nextProps, nextState) {
+            console.log(nextState.count)
+            console.log(this.state.count)
+            if (nextState.count != this.state.count) return true;
+            else return false;
+            return true;
+        }
+
+        componentWillUpdate(){
+            console.log( "el componente se va a actualizar" )
+        }
+
+        componentDidUpdate(){
+            console.log( "el componente se a actualizado" )
+        }
+
+        // limpiamos antes de desmontar y quitar el componente de memoria
+        componentWillUnmount(){
+            console.log( "el componente se va a desmontar" )
+            document.removeEventListener( 'click', this.handleClick )
+        }
+
+        handleClick() {
+            this.setState({
+                count: this.state.count + 1,
+            });
+        }
+        // solo necesitamos hacer bind cuando accedemos al this del componente
+        handleMouseEnter( event ) {
+            console.log( event )
+        }
+
+        // CONTEXTO
+        //
+        // permite devolver los datos que queremos mandar al contexto de toda la aplicacion
+        getChildContext() {
+            return {
+                count: this.state.count,
+            };
+        }
+
+
+        render() {
+            return (
+                <Hola
+                    name={this.props.name}
+                    count={this.state.count}
+                    onClick={this.handleClick}
+                    onMouseEnter={this.handleMouseEnter}
+                />
+            );
+        }
+    }
+
+    // CONTEXTO
+    //
+    // define el tipo de dato del dato enviado al contexto
+    MiComponente.childContextTypes = {
+        count: React.PropTypes.number,
+    }
+
+
+    // MIXIN
+    const mixin = {
+        handleClick() {
+            console.log( "clickeado" );
+        },
+    }
+
+    // los mixin solo funcionan con create class
+    const Componente = React.createClass({
+        mixins: [
+            mixin,
+        ],
+        render(){
+            return <div onClick={this.handleClick}>Hola</div>
+        }
+    })
+    // FIN DEL MIXIN
+
+
+    ReactDOM.render(
+        //<MiComponente name="Platzi" />,
+        //<HolaHOC name="Platzi" />,
+        <Componente />,
+        document.getElementById('app')
+    );
+
+    /*setTimeout(
+        () => {
+            ReactDOM.render(
+                <MiComponente name="Hola Platzi" />,
+                document.getElementById('app')
+            )
+        },
+        1000
+    )*/
+
+</script>
+
+</body>
+</html>

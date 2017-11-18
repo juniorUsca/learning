@@ -1,0 +1,77 @@
+{
+  "name": "react-blog",
+  "version": "0.0.1",
+  "description": "```\r docker build -t juscah/react-blog .\r docker run -ti --rm -v learning:/data juscah/react-blog sh\r ```",
+  "main": ".built/server/index.js",
+  "scripts": {
+    "build": "NODE_ENV=production webpack -p",
+    "webpack": "webpack -w",
+    "statics": "serve ./built/statics/ --port 3001 --cache 0",
+    "node": "node ./built/server/index.js",
+    "start": "npm run node",
+    "test": "jest"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "/__mocks__/styleMock.js",
+      "\\.(styl)$": "/__mocks__/styleMock.js"
+    },
+    "notify": true
+  },
+  "author": "juniorUsca <junior.usca@gmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "immutable": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-intl": "^2.3.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-immutable": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^21.0.2",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-latest-minimal": "^1.1.2",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.5",
+    "eslint": "^4.6.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.3.0",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "jest": "^21.0.2",
+    "json-loader": "^0.5.7",
+    "nib": "^1.1.2",
+    "react-test-renderer": "^15.6.1",
+    "serve": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "stylus-loader": "^3.0.1",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack": "^3.5.5"
+  }
+}
