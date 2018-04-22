@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Media from './src/playlist/components/media'
+import Media from './src/playlist/components/media.jsx'
 
 const container = document.getElementById('app');
-
-ReactDOM.render(<Media/>, container);
+const app = <Media
+  title = 'Que es responsive design?'
+  author = 'Junior Usca'
+  image = './images/covers/responsive.jpg'
+/>
+ReactDOM.render(app, container);
