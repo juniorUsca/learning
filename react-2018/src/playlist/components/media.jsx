@@ -7,13 +7,27 @@ class Media extends Component {
 
   constructor(props) {
     super(props)
+
+    //this.state = {
+      //author: props.author,
+    //}
+    // con es7 el estado puede estar fuera del constructor
+
     // this.handleClick = this.handleClick.bind(this)
     // evitamos esto con es7 con array functions q heredan el contexto de su padre
+  }
+
+  state = {
+    author: this.props.author,
   }
 
   handleClick = (event) => {
     console.log(event)
     console.log(this.props.title)
+    this.setState({
+      author: 'hacked',
+    })
+
   }
 
   render() {
@@ -36,7 +50,7 @@ class Media extends Component {
             className='Media-image'
           />
           <h3 className='Media-title'>{this.props.title}</h3>
-          <p className='Media-author'>{this.props.author}</p>
+          <p className='Media-author'>{this.state.author}</p>
         </div>
       </div>
     )
