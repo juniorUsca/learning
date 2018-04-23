@@ -8,6 +8,7 @@ class Media extends Component {
   constructor(props) {
     super(props)
     // this.handleClick = this.handleClick.bind(this)
+    // evitamos esto con es7 con array functions q heredan el contexto de su padre
   }
 
   handleClick = (event) => {
