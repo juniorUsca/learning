@@ -7,5 +7,6 @@ const app = <Media
   title = 'Que es responsive design?'
   author = 'Junior Usca'
   image = './images/covers/responsive.jpg'
+  type = 'video'
 />
 ReactDOM.render(app, container);
