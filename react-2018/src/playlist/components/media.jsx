@@ -5,6 +5,7 @@ import './media.css'
 
 class Media extends Component {
 
+  // llamado antesde q el componente sea montado
   constructor(props) {
     super(props)
 
@@ -15,6 +16,11 @@ class Media extends Component {
 
     // this.handleClick = this.handleClick.bind(this)
     // evitamos esto con es7 con array functions q heredan el contexto de su padre
+  }
+
+  // si ocurre algun error al renderizar el componente
+  componentDidCatch() {
+
   }
 
   state = {
