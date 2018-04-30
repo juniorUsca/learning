@@ -9,8 +9,6 @@ import Volume from './../../icons/components/volume.jsx'
 import './playlist.css'
 
 function Playlist(props) {
-  const playlist = props.data.categories[0].playlist;
-  console.log(props.data);
   return (
     <div className='Playlist'>
       <FullScreen size={50} color='red' />
@@ -18,7 +16,7 @@ function Playlist(props) {
       <Play size={50} color='red' />
       <Volume size={50} color='red' />
       {
-        playlist.map(item => {
+        props.playlist.map(item => {
           return <Media
             key={item.id}
             image={item.cover}

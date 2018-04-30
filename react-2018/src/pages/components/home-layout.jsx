@@ -1,6 +1,6 @@
 import React from 'react'
 
-function HomeLayout() {
+function HomeLayout(props) {
   return(
     <section>
       {props.children}
