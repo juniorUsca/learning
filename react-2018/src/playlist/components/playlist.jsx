@@ -11,16 +11,19 @@ import './playlist.css'
 function Playlist(props) {
   return (
     <div className='Playlist'>
+      {/*
       <FullScreen size={50} color='red' />
       <Pause size={50} color='red' />
       <Play size={50} color='red' />
       <Volume size={50} color='red' />
+      */}
       {
         props.playlist.map(item => {
           return <Media
             key={item.id}
             image={item.cover}
             {...item}
+            handleClick={props.handleOpenModal}
             />
         })
       }

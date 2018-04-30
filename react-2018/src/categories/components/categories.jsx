@@ -11,6 +11,7 @@ function Categories(props) {
           return <Category
             key={item.id}
             {...item}
+            handleOpenModal={props.handleOpenModal}
           />
         })
       }
