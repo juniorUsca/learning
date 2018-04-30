@@ -1,9 +1,11 @@
 import React from 'react'
 import Category from './category.jsx';
 
+import './categories.css'
+
 function Categories(props) {
   return(
-    <div>
+    <div className='Categories'>
       {
         props.categories.map(item => {
           return <Category

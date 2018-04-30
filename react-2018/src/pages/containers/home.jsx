@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import HomeLayout from '../components/home-layout.jsx'
 import Categories from '../../categories/components/categories.jsx'
+import Related from '../../related/components/related.jsx'
 
 class Home extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Home extends Component {
   render() {
     return(
       <HomeLayout>
+        <Related />
         <Categories categories={this.props.data.categories} />
       </HomeLayout>
     )
