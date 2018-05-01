@@ -6,6 +6,7 @@ import Categories from '../../categories/components/categories.jsx'
 import Related from '../../related/components/related.jsx'
 import ModalContainer from '../../widgets/containers/modal-container.jsx'
 import Modal from '../../widgets/components/modal.jsx'
+import HandleError from '../../error/containers/handle-error.jsx'
 
 class Home extends Component {
   state = {
@@ -29,23 +30,25 @@ class Home extends Component {
 
   render() {
     return(
-      <HomeLayout>
-        <Related />
-        <Categories
-          categories={this.props.data.categories}
-          handleOpenModal={this.handleOpenModal}
-        />
-        {
-          this.state.modalVisible &&
-          <ModalContainer>
-            <Modal
-              handleClick={this.handleModalCloseClick}
-              >
-              <h1>esto es un portal</h1>
-            </Modal>
-          </ModalContainer>
-        }
-      </HomeLayout>
+      <HandleError>
+        <HomeLayout>
+          <Related />
+          <Categories
+            categories={this.props.data.categories}
+            handleOpenModal={this.handleOpenModal}
+          />
+          {
+            this.state.modalVisible &&
+            <ModalContainer>
+              <Modal
+                handleClick={this.handleModalCloseClick}
+                >
+                <h1>esto es un portal</h1>
+              </Modal>
+            </ModalContainer>
+          }
+        </HomeLayout>
+      </HandleError>
     )
   }
 }
