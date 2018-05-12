@@ -7,12 +7,18 @@ import PlayPause from '../components/play-pause.jsx'
 class VideoPlayer extends Component {
 
   state = {
-    pause: true,
+    pause: false,
   }
 
   togglePlay = (event) => {
     this.setState({
       pause: !this.state.pause,
+    })
+  }
+
+  componentDidMount = () => {
+    this.setState({
+      pause: !this.props.autoplay,
     })
   }
 
@@ -27,7 +33,8 @@ class VideoPlayer extends Component {
           handleClick={this.togglePlay}
         />
         <Video
-          autoplay={true}
+          autoplay={this.props.autoplay}
+          pause={this.state.pause}
           src='http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4'
         />
       </VideoPlayerLayout>
