@@ -23,7 +23,7 @@ function Playlist(props) {
             key={item.id}
             image={item.cover}
             {...item}
-            handleClick={props.handleOpenModal}
+            openModal={props.handleOpenModal}
             />
         })
       }
