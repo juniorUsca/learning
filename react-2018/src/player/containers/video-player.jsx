@@ -6,6 +6,7 @@ import PlayPause from '../components/play-pause.jsx'
 import Timer from '../components/timer.jsx'
 import VideoPlayerControls from '../components/video-player-controls.jsx'
 import ProgressBar from '../components/progress-bar.jsx'
+import Spinner from '../components/spinner.jsx'
 
 import Utils from './../../utils/utils.jsx'
 
@@ -15,6 +16,7 @@ class VideoPlayer extends Component {
     pause: false,
     duration: 0,
     currentTime: 0,
+    loading: false,
   }
 
   togglePlay = (event) => {
@@ -40,14 +42,24 @@ class VideoPlayer extends Component {
     this.setState({
       currentTime: this.video.currentTime,
     })
-    console.log('changing')
   }
 
   handleProgressChange = (event) => {
-    console.log('set')
-    this.video.pause()
     this.video.currentTime = event.target.value
-    this.video.play()
+  }
+
+  handleSeeking = (event) => {
+    this.setState({
+      loading: true,
+    })
+    this.togglePlay()
+  }
+
+  handleSeeked = (event) => {
+    this.setState({
+      loading: false,
+    })
+    this.togglePlay()
   }
 
   render() {
@@ -71,11 +83,16 @@ class VideoPlayer extends Component {
             handleChange={this.handleProgressChange}
           />
         </VideoPlayerControls>
+        <Spinner
+          active={this.state.loading}
+        />
         <Video
           autoplay={this.props.autoplay}
           pause={this.state.pause}
           handleLoadedMetadata={this.handleLoadedMetadata}
           handleTimeUpdate={this.handleTimeUpdate}
+          handleSeeking={this.handleSeeking}
+          handleSeeked={this.handleSeeked}
           src='http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4'
         />
       </VideoPlayerLayout>
