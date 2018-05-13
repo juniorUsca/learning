@@ -7,6 +7,7 @@ import Timer from '../components/timer.jsx'
 import VideoPlayerControls from '../components/video-player-controls.jsx'
 import ProgressBar from '../components/progress-bar.jsx'
 import Spinner from '../components/spinner.jsx'
+import Volume from '../components/volume.jsx'
 
 import Utils from './../../utils/utils.jsx'
 
@@ -17,6 +18,9 @@ class VideoPlayer extends Component {
     duration: 0,
     currentTime: 0,
     loading: false,
+    volume: 0.5,
+    lastVolume: 0.5,
+    muted: 0,
   }
 
   togglePlay = (event) => {
@@ -33,6 +37,7 @@ class VideoPlayer extends Component {
 
   handleLoadedMetadata = (event) => {
     this.video = event.target
+    this.video.volume = this.state.volume
     this.setState({
       duration: this.video.duration,
     })
@@ -54,12 +59,30 @@ class VideoPlayer extends Component {
     })
     this.togglePlay()
   }
-
   handleSeeked = (event) => {
     this.setState({
       loading: false,
     })
     this.togglePlay()
+  }
+
+  handleVolume = (event) => {
+    this.video.volume = event.target.value
+    this.setState({
+      volume: this.video.volume,
+      lastVolume: this.video.volume,
+      muted: false,
+    })
+  }
+  handleVolumeClick = (event) => {
+    this.setState({
+      muted: !this.state.muted,
+    }, () => {
+      this.video.volume = (this.state.muted) ? 0 : this.state.lastVolume
+      this.setState({
+        volume: this.video.volume,
+      })
+    })
   }
 
   render() {
@@ -81,6 +104,11 @@ class VideoPlayer extends Component {
             duration={this.state.duration}
             value={this.state.currentTime}
             handleChange={this.handleProgressChange}
+          />
+          <Volume
+            handleChange={this.handleVolume}
+            value={this.state.volume}
+            handleClick={this.handleVolumeClick}
           />
         </VideoPlayerControls>
         <Spinner
