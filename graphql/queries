@@ -1,0 +1,93 @@
+{
+  profesor(id: 3) {
+    id
+    nombre
+    cursos {
+      titulo
+    }
+  }
+  cursos{
+    id
+    titulo
+    descripcion
+    rating
+    profesor {
+      id
+      nombre
+      nacionalidad
+      genero
+      cursos {
+        titulo
+      }
+    }
+    comentarios {
+      id
+      nombre
+      cuerpo
+    }
+  }
+  profesores {
+    nombre
+    cursos {
+      titulo
+    }
+  }
+}
+
+
+
+
+
+
+
+
+mutation AgregarProfesor {
+  profesorAdd(profesor: {
+    nombre: "Rosario"
+    genero: FEMENINO
+    nacionalidad: "Peru"
+  }) {
+    id
+    nombre
+  }
+}
+
+mutation EditarProfesor {
+  profesorEdit(profesorId: 11, profesor: {
+    nombre: "Charito"
+  }) {
+    id
+    nombre
+    genero
+    nacionalidad
+    cursos {
+      titulo
+    }
+  }
+}
+
+mutation EliminarProfesor {
+  profesorDelete(profesorId: 1) {
+    nombre
+  }
+}
+
+
+
+
+{
+  buscar(query: "GraphQL") {
+    __typename
+    ... on Curso {
+      titulo
+      descripcion
+      profesor {
+        nombre
+      }
+    }
+    ... on Profesor {
+      nombre
+      nacionalidad
+    }
+  }
+}
